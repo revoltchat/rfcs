@@ -2,6 +2,7 @@
 - Start Date: (DD/MM/YYYY)
 - RFC PR: https://github.com/revoltchat/rfcs/issues/0000
 - Tracking Issue: https://github.com/revoltchat/revolt/issues/0000
+- Status: draft
 
 # Summary
 
