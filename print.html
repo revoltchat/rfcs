@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="rfcs"><a class="header" href="#rfcs">rfcs</a></h1>
+<p>RFCs for changes to Revolt. This is a process for adding or changing anything in revolt, in a formalised and clear maner, so that everyone understands clearly what is needed.</p>
+<h2 id="when-you-need-an-rfc"><a class="header" href="#when-you-need-an-rfc">When you need an rfc</a></h2>
+<p>You must create an RFC if you intend to make a substantial change to Revolt, or any part of Revolt, this includes:</p>
+<ul>
+<li>Any new features</li>
+<li>Changes to existing ones which have a large impact</li>
+<li>Removing features</li>
+</ul>
+<p>What doesn't need an RFC:</p>
+<ul>
+<li>Rewording, reorgnizing or refactoring</li>
+<li>Additions which improve in ways which do not add new features - speedups, bug fixes, better user experience in regards to errors</li>
+<li>Additions which do not affect users of revolt but only the developers of revolt.</li>
+</ul>
+<p>If you attempt to make a pull request which would require an RFC without an RFC you will be turned down and be asked to submit an RFC before the PR is looked at.</p>
+<p>If you are able to, you are allowed to make an implementation for a draft or still in progress RFC if applicable but, if the RFC is denied your pull request will be denied as well.</p>
+<h2 id="before-creating-an-rfc"><a class="header" href="#before-creating-an-rfc">Before creating an rfc</a></h2>
+<p>It is good to discuss what you want to make an RFC on first before creating an rfc, this means if the outlook on the proposal is bad then the time will not be wasted creating the rfc, you can discuss in issues or discussions in the Revoltchat Github organisation or on Revolt.</p>
+<h2 id="creating-an-rfc"><a class="header" href="#creating-an-rfc">Creating an rfc</a></h2>
+<p>To get a feature added to revolt, you must get your RFC merged into this repository first, at this point the RFC is &quot;active&quot; and can be discussed.</p>
+<ul>
+<li><a href="https://github.com/revoltchat/rfcs/fork">Fork the RFC Repo</a></li>
+<li>Copy the <code>rfc-0000-template.md</code> into <code>rfcs/rfc-0000-name-of-feature.md</code>, dont give it a number yet, this will be assignee once the RFC is made.</li>
+<li>Fill in the RFC. Make sure to include detail, any ambiguties will slow down the RFC being accepted and will likely need to be corrected.</li>
+<li>Submit the RFC, make sure to name the PR to the RFCs name or something similar which conveys a similar message.</li>
+<li>Now that the PR is made you can update the RFC number to the pull request number</li>
+<li>The RFC will be labelled by the team with the relevent labels.</li>
+<li>The RFC will be discussed and commented on with queries or requests for changes by the team and community members, you can make edits in-line with what has been said, do not squash or edit existing commits as that can lead to confusion.</li>
+<li>Once the RFC is at a final stage, a member of the team will assign the RFC the Final Comment Period label, at this point the RFC should not be edited, this stage will last 10 days and after that the team is in a position where the final disposition can be decided (merged, closed or postphoned), this outcome does not need to the concensus of all participants of the discussion, however most if not all opinions will be taken into account. During the 10 days any final comments can be made to lodge any objections before a decision is made.</li>
+<li>During the Final Comment Period if any new substantial arguments or ideas are raised, the Final Comment Period can be cancelled and it can go back into development if the author or the team agrees.</li>
+</ul>
+<h2 id="active-rfc-life-cycle"><a class="header" href="#active-rfc-life-cycle">Active rfc life-cycle</a></h2>
+<p>Once the RFC is merged it becomes &quot;active&quot;, you can still make updates to the RFC via pull requests however the workflow above must be followed.</p>
+<p>Now that it is active a developer can be assigned to implement the RFC, the author does not need to implement it themself, however it is the most effective way for the RFC to be implemented. Furthermore, the fact that the RFC is active does not mean it it garenteed to be implemented or accepted, if after this stage it is found that RFC is no longer deemed nessessary or a hole is found in it, it can be still denied and closed.</p>
+<h2 id="implementing-the-rfc"><a class="header" href="#implementing-the-rfc">Implementing the rfc</a></h2>
+<p>Depending on the RFC an implemention must be made, A tracking issue can be made to track the status of the implemention and link to the currently open pull requests (if any), this can also serve as a discussion page where the implemention or queries about the RFC can be made. If you would like to implement the RFC comment on the tracking issue where a member of the team can assign you to the tracking issue, if you are unsure on if there is already someone working on the implemention, fele free to comment on the comment</p>
+<h2 id="rfc-postponement"><a class="header" href="#rfc-postponement">RFC postponement</a></h2>
+<p>RFCs can be postphoned (they will be labelled with the &quot;Postphoned&quot; label), this can be for varies issues, if they are not being currently worked on, or are blocked by other RFCs and will take a while for it to be unblocked.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
