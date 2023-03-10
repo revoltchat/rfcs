@@ -2,6 +2,7 @@
 - Start Date: 10/03/2023
 - RFC PR: https://github.com/revoltchat/rfcs/issues/0001
 - Tracking Issue: https://github.com/revoltchat/revolt/issues/0000
+- Status: draft
 
 # Summary
 
