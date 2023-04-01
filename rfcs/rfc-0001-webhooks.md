@@ -98,20 +98,19 @@ The POST routes take the same json body as the message send route. The data the 
 route takes can be seen on the [GitHub docs](https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads)
 
 The message structure must be changed to acomodate these changes, this requires a breaking change
-of making `Message.author` optional, as no author will exist if a webhook sends the message,
-when a webhook sends a message a `Message.webhook` field will instead exist containing the webhook
-ID. These two fields are mutually exlusive.
+of making `Message.author` either the user ID or the webhook ID, depending on what sent the message,
+when a webhook sends a message a `Message.webhook` field will contain the webhook's information.
 
 ```diff
-- author: String
-+ author: Option<String>,
-+ webhook: Option<String>
+- author: String  // User ID
++ author: String  // Either user ID or webhook ID
++ webhook: Option<Webhook>
 ```
 
 This will require an update to existing programs which use the API to ensure they do not break
 with this change.
 
-To get infomation about the webhook which send the message, you are able to use the `GET /webhooks/<target>` route which returns all public infomation about the webhook, as this does not require any permissions anyone is able to use the route, you are encoraged to cache the webhook info to avoid repeated fetches.
+Information about the webhook which sent the message is included inside the message, you are also able to query `GET /webhooks/<target>` route which returns the same infomation.
 
 There will be three new events to go along side this, these events do not contain the token as these events are
 sent to all people who have access to the channel and not just people with permissions
