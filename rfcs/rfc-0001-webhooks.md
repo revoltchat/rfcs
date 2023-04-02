@@ -43,7 +43,7 @@ struct Webhoook {
   // The name of the webhook - 1 to 32 chars
   name: String,
 
-  // The avatar of the webhook, it it has one
+  // The avatar of the webhook, if it has one
   avatar: Option<File>,
 
   // The ID of the channel which this webhook belongs to
