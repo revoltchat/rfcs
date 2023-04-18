@@ -57,14 +57,15 @@ struct Webhoook {
 Addition routes must be added to the API, this includes:
 
 ### Channel Routes
-```
+
+```http
 POST /channel/<target>/webhooks - Create webhook in the channel
 GET /channel/<target>/webhooks - Gets all webhooks in the channel
 ```
 
 ### Webhook Routes
 
-```
+```http
 GET /webhooks/<target>/<token> - Gets the webhook with a token, does not require permissions
 GET /webhooks/<target> - Gets the wehook, requires permissions
 PATCH /webhooks/<target>/<token> - Edits the webhook with a token, does not require permissions
@@ -97,20 +98,35 @@ pub enum RemoveFields {
 The POST routes take the same json body as the message send route. The data the GitHub compatible
 route takes can be seen on the [GitHub docs](https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads)
 
-The message structure must be changed to acomodate these changes, this requires a breaking change
+The message structure must be changed to accommodate these changes, this requires a breaking change
 of making `Message.author` either the user ID or the webhook ID, depending on what sent the message,
 when a webhook sends a message a `Message.webhook` field will contain the webhook's information.
 
 ```diff
 - author: String  // User ID
 + author: String  // Either user ID or webhook ID
-+ webhook: Option<Webhook>
++ webhook: Option<MessageWebhook>
+```
+
+the webhook data inside a message will contain a stripped down version of the `Webhook` struct to avoid
+sending unessessary data:
+
+```rust
+struct MessageWebhook {
+  // Id of Webhook
+  id: String,
+  // The name of the webhook - 1 to 32 chars
+  name: String,
+  // The id of the avatar of the webhook, if it has one
+  avatar: Option<String>
+}
 ```
 
 This will require an update to existing programs which use the API to ensure they do not break
 with this change.
 
-Information about the webhook which sent the message is included inside the message, you are also able to query `GET /webhooks/<target>` route which returns the same infomation.
+Information about the webhook which sent the message is included inside the message, you are also able to
+query `GET /webhooks/<target>` route which returns the same infomation.
 
 There will be three new events to go along side this, these events do not contain the token as these events are
 sent to all people who have access to the channel and not just people with permissions
@@ -137,8 +153,7 @@ enum Events {
 # Prior art
 
 [Discord](https://discord.com) and [Slack](https://slack.com) both have webhooks as well both with
-similar implementation,
-both work well and have wide adoption
+similar implementation, both work well and have wide adoption
 
 # Unresolved questions
 
