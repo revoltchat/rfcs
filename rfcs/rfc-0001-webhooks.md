@@ -113,8 +113,6 @@ sending unessessary data:
 
 ```rust
 struct MessageWebhook {
-  // Id of Webhook
-  id: String,
   // The name of the webhook - 1 to 32 chars
   name: String,
   // The id of the avatar of the webhook, if it has one
