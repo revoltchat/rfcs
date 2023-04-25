@@ -1,7 +1,7 @@
-# rfcs
-RFCs for changes to Revolt. This is a process for adding or changing anything in revolt, in a formalised and clear maner, so that everyone understands clearly what is needed.
+# RFCs
+RFCs for changes to Revolt. This is a process for adding or changing anything in Revolt, in a formalised and clear manner, so that everyone understands clearly what is needed.
 
-## When you need an rfc
+## When you need an RFC
 
 You must create an RFC if you intend to make a substantial change to Revolt, or any part of Revolt, this includes:
 
@@ -10,19 +10,19 @@ You must create an RFC if you intend to make a substantial change to Revolt, or 
 - Removing features
 
 What doesn't need an RFC:
-- Rewording, reorgnizing or refactoring
-- Additions which improve in ways which do not add new features - speedups, bug fixes, better user experience in regards to errors
-- Additions which do not affect users of revolt but only the developers of revolt.
+- Rewording, reorganising or refactoring
+- Additions which improve in ways which do not add new features - performance improvements, bug fixes, better user experience in regards to errors
+- Additions which do not affect users of Revolt but only the developers of Revolt
 
 If you attempt to make a pull request which would require an RFC without an RFC you will be turned down and be asked to submit an RFC before the PR is looked at.
 
 If you are able to, you are allowed to make an implementation for a draft or still in progress RFC if applicable but, if the RFC is denied your pull request will be denied as well.
 
-## Before creating an rfc
+## Before creating an RFC
 
-It is good to discuss what you want to make an RFC on first before creating an rfc, this means if the outlook on the proposal is bad then the time will not be wasted creating the rfc, you can discuss in issues or discussions in the Revoltchat Github organisation or on Revolt.
+It is good to discuss what you want to make an RFC on first before creating an rfc, this means if the outlook on the proposal is bad then the time will not be wasted on creating the rfc, you can discuss in issues or discussions in the Revolt GitHub organisation or ideally come to [the Revolt API server on Revolt itself to discuss with us](https://rvlt.gg/API).
 
-## Creating an rfc
+## Creating an RFC
 
 To get a feature added to revolt, you must get your RFC merged into this repository first, at this point the RFC is "active" and can be discussed.
 
@@ -36,13 +36,13 @@ To get a feature added to revolt, you must get your RFC merged into this reposit
 - Once the RFC is at a final stage, a member of the team will assign the RFC the Final Comment Period label, at this point the RFC should not be edited, this stage will last 10 days and after that the team is in a position where the final disposition can be decided (merged, closed or postphoned), this outcome does not need to the concensus of all participants of the discussion, however most if not all opinions will be taken into account. During the 10 days any final comments can be made to lodge any objections before a decision is made.
 - During the Final Comment Period if any new substantial arguments or ideas are raised, the Final Comment Period can be cancelled and it can go back into development if the author or the team agrees.
 
-## Active rfc life-cycle
+## Active RFC life-cycle
 
 Once the RFC is merged it becomes "active", you can still make updates to the RFC via pull requests however the workflow above must be followed.
 
 Now that it is active a developer can be assigned to implement the RFC, the author does not need to implement it themself, however it is the most effective way for the RFC to be implemented. Furthermore, the fact that the RFC is active does not mean it it garenteed to be implemented or accepted, if after this stage it is found that RFC is no longer deemed nessessary or a hole is found in it, it can be still denied and closed.
 
-## Implementing the rfc
+## Implementing the RFC
 
 Depending on the RFC an implemention must be made, A tracking issue can be made to track the status of the implemention and link to the currently open pull requests (if any), this can also serve as a discussion page where the implemention or queries about the RFC can be made. If you would like to implement the RFC comment on the tracking issue where a member of the team can assign you to the tracking issue, if you are unsure on if there is already someone working on the implemention, fele free to comment on the comment
 
