@@ -14,7 +14,7 @@ Why is this RFC being made, what does it achieve or solve, what is the expected 
 
 # Guide-level explanation
 
-Explain the propsal as if its already in revolt and you where teaching it to new users.
+Explain the proposal as if its already in Revolt and you were teaching it to new users.
 - Introduce new concepts
 - Explain the feature with examples
 - What this fixes or adds and what users should think of the feature
