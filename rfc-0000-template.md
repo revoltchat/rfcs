@@ -16,7 +16,7 @@ Why is this RFC being made, what does it achieve or solve, what is the expected 
 
 Explain the propsal as if its already in revolt and you where teaching it to new users.
 - Introduce new concepts
-- Explain the feature with exampls
+- Explain the feature with examples
 - What this fixes or adds and what users should think of the feature
 - Discuss how this impacts using revolt, does it make it harder or easier to use.
 
