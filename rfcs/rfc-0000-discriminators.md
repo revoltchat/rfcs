@@ -89,6 +89,16 @@ This section should reference the examples in the previous section and disect th
 
 # Drawbacks
 
+The main drawbacks are:
+
+- Additional information to remember about your username
+
+  Although this works both ways in the sense that, you can have a much simpler username.
+
+- Users may no longer have a completely 'unique' username on the platform
+
+  But we're approaching this from the standpoint that usernames on platforms such as these should not have to compete for 'uniqueness'.
+
 I want to take this section to also discuss the case study of Discord's removal of the discriminator system and their [cited drawbacks](https://discord.com/blog/usernames#heading-3):
 
 - > More than 40% of you either don’t remember your discriminator or don’t even know what a discriminator is. That’s a big problem when discriminators are required to add a new friend.
