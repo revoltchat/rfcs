@@ -89,17 +89,71 @@ This section should reference the examples in the previous section and disect th
 
 # Drawbacks
 
-WIP
+I want to take this section to also discuss the case study of Discord's removal of the discriminator system and their [cited drawbacks](https://discord.com/blog/usernames#heading-3):
 
-Why should this not be added.
+- > More than 40% of you either don’t remember your discriminator or don’t even know what a discriminator is. That’s a big problem when discriminators are required to add a new friend.
+
+  This RFC cannot address this issue however further work can be done to ease these interactions:
+
+  - R&D to determine how to build the UI to intuitively tell the user how to share their username with their discriminator
+  - Implementation of friend links / codes to ease connecting users to each other
+
+    This is not something that Discord has solved and to this day there is no way to create a friend request link.
+
+  - Implementation of nearby find (prior art: Discord) / QR friend codes (prior art: Snapchat) / add by contact book (prior art: Signal, WhatsApp)
+
+    These may help streamline IRL interactions by providing users with a simple flow to follow.
+
+  - Implementation of add by connections
+
+    Allow adding other people by common social media connections.
+
+  - Global user search (prior art: Steam)
+
+    Allow users to opt-in to a global username search / or otherwise also search through mutual members on servers, to avoid needing the discriminator altogether.
+
+- > Across Discord, almost half of all friend requests fail to connect the user with the person they wanted to match with, mostly because users enter an incorrect or invalid username due to a combination of missing discriminator and incorrect casing.
+
+  - Issues with ease of adding are addressed in the point above, however incorrect casing is irrelevant to Revolt as-is because Revolt's usernames are already case-insensitive and this will not change.
+
+    If we look at the given example:
+
+    > You meet someone IRL that you want to talk to on Discord, and they say “I’m Phibi Eight Nine Three Six!” You go home and add “phibi#8936” only to find out you added the wrong “Phibi” because your new friend’s username is actually “PhIBI#8936”.
+
+    Revolt does not permit a registration of both "PhIBI" and "phibi".
+
+- > You want to use a common name like “Mike” or “Jane” but there are already 9,999 Mikes or Janes so you’re blocked from that name altogether.
+
+  We are not restricted to just 4-digit discriminators in our implementation.
+
+- > You like to change your username a lot and get rate limited.
+
+  If we were also to add more stringent rate limits, this may be solved by also including display names.
+
+- > Your friend says they changed their name to “vernacular” but actually it’s “𝖛𝖊𝖗𝖓𝖆𝖈𝖚𝖑𝖆𝖗” and you have trouble finding them.
+
+  While this is a valid concern, I would personally put this down as the user's own issue.
 
 # Rationale and alternatives
 
-WIP
+Discriminators appear to show the least disadvantages out of all of the solutions discussed so far.
 
-- Why is this design the best
-- Are there alternative ways to solve this
-- Could this be done with existing features or existing solutions
+| Solution                                                                | Description                                                                                                           | Users have desired username | Selling disincentivized | Privacy | Usability | Difficulty |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | :-------------------------: | :---------------------: | :-----: | :-------: | :--------: |
+| **Discriminators**                                                      | Proposed in this RFC                                                                                                  |             ✅              |           ✅            |   ✅    |    ⚠️     |    Low     |
+| **Discriminators**<br/>w/ display names                                 | Show display names with greater priority to username / discriminator combinations.<br/>\* May be proposed in this RFC |             ✅              |           ✅            |   ✅    |    ⚠️     |    Low     |
+| **Discriminators**<br/>w/ display names<br/>w/ restricted character set | Also restrict the characters that you can use in the username itself.<br/>\* May be proposed in this RFC              |             ✅              |           ✅            |   ✅    |    ✅     |  Medium †  |
+| Unique usernames                                                        | Current system on Revolt<br/>(but any unicode username is allowed)                                                    |             ❌              |           ❌            |   ❌    |    ⚠️     |    Low     |
+| Unique usernames<br/>w/ restricted character set                        | Alphanumeric unique global usernames                                                                                  |             ❌              |           ❌            |   ❌    |    ✅     |  Medium †  |
+| Unique usernames<br/>w/ display names                                   | Either unique username solution but with added display names that show instead of the username                        |             ⚠️              |           ❌            |   ⚠️    |    ✅     |    Low     |
+| Remove usernames altogether<br/>(only display names)                    | Resort to using friend codes, invite links, and the like exclusively.                                                 |             ✅              |           ✅            |   ✅    |    ⚠️     |   High ¶   |
+
+In regards to this table,
+
+- Privacy means whether users can avoid being discovered based on their common names.
+- Usability is whether users can practically and quickly add each other.
+- † Restricting existing usernames further would potentially require some users to change username.
+- ¶ Removing usernames altogether would require a complete redesign of how friends work on Revolt.
 
 # Prior art
 
@@ -110,7 +164,22 @@ This has been implemented before on other platforms:
 
 # Unresolved questions
 
-WIP: what should the discriminator look like, 4-digit, 6-digit, characters, etc
+We haven't decided on how the discriminator will look yet, the main options include:
+
+| Solution       |      Example       | Description                                   | Usability | Quantity | Safe |
+| -------------- | :----------------: | --------------------------------------------- | :-------: | :------: | :--: |
+| 4-digit        |      `#1234`       | Any 4 digits                                  |    ✅     |   Low    |  ✅  |
+| N-digit        |     `#123456`      | Any N digits                                  |    ⚠️     |  Medium  |  ⚠️  |
+| Variable Digit | `#123` ... `#1234` | Scale between 1 and N digits depending on use |    ⚠️     | Infinite |  ⚠️  |
+| 4-hex          |      `#12AF`       | Any 4 hex characters                          |    ✅     |  Medium  |  ✅  |
+| 4-char         |      `#1ABZ`       | Any 4 alphanumeric characters                 |   ❌ †    |   High   |  ❌  |
+
+In regards to this table:
+
+- Usability is whether the solution is practical, i.e. reasonably sized and simple.
+- Quantity is how many possible discriminators may be housed under one username.
+- Safe is whether the solution is not susceptible to generating undesired combinations and phrases.
+- † Allowing any alphanumeric characters may cause confusion between similar charactres using certain fonts, e.g. `O` and `0`.
 
 # Security concerns
 
@@ -118,6 +187,12 @@ This should not impact security, since this is almost entirely a cosmetic change
 
 # Future ideas
 
-WIP: friend links, QR friend invites, anything to improve friend UX
+As discussed previously, we may look into implementing:
 
-WIP: additional privacy settings
+- Friend links / codes
+- Nearby find / QR friend codes / add by contact book
+- Add users by social connections
+- Global user search
+- Better friend flow UX
+
+We may also want to look into implementing additional privacy settings for adding users.
