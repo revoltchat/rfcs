@@ -77,7 +77,7 @@ making a significant UX hit towards the usability of the friend system.
 
 # Reference-level explanation
 
-A new `discriminator` field shall be added to the User object, as such the
+A new `discriminator` string field shall be added to the User object, as such the
 `UNIQUE IGNORE-CASE USERNAME` index will be replaced with a
 `UNIQUE (IGNORE-CASE USERNAME + DISCRIMINATOR)` index.
 
