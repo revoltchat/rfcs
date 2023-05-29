@@ -157,6 +157,7 @@ Discriminators appear to show the least disadvantages out of all of the solution
 | Unique usernames<br/>w/ restricted character set                        | Alphanumeric unique global usernames                                                                                  |             ❌              |           ❌            |   ❌    |    ✅     |  Medium †  |
 | Unique usernames<br/>w/ display names                                   | Either unique username solution but with added display names that show instead of the username                        |             ⚠️              |           ❌            |   ⚠️    |    ✅     |    Low     |
 | Remove usernames altogether<br/>(only display names)                    | Resort to using friend codes, invite links, and the like exclusively.                                                 |             ✅              |           ✅            |   ✅    |    ⚠️     |   High ¶   |
+| Unique cryptographic user identifiers with display names          | Resort to using friend codes, invite links, and the like exclusively.                                                 |              ⚠️              |           ✅            |    ⚠️    |    ⚠️     |   Medium   |
 
 In regards to this table,
 
