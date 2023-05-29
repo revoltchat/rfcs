@@ -180,8 +180,8 @@ We haven't decided on how the discriminator will look yet, the main options incl
 | -------------- | :----------------: | --------------------------------------------- | :-------: | :------: | :--: |
 | 4-digit        |      `#1234`       | Any 4 digits                                  |    ✅     |   Low    |  ✅  |
 | N-digit        |     `#123456`      | Any N digits                                  |    ⚠️     |  Medium  |  ⚠️  |
-| Variable Digit | `#123` ... `#1234` | Scale between 1 and N digits depending on use |    ⚠️     | Infinite |  ⚠️  |
-| 4-hex          |      `#12AF`       | Any 4 hex characters                          |    ✅     |  Medium  |  ✅  |
+| Variable Digit | `#123` ... `#1234` | Scale between n and N digits depending on use |    ⚠️     | Infinite |  ⚠️  |
+| 4-hex          |      `#12AF`       | Any 4 hex characters                          |    ✅     |  Medium  |  ⚠️  |
 | 4-char         |      `#1ABZ`       | Any 4 alphanumeric characters                 |   ❌ †    |   High   |  ❌  |
 
 In regards to this table:
