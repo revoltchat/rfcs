@@ -170,6 +170,14 @@ In regards to this table,
 - † Restricting existing usernames further would potentially require some users to change username.
 - ¶ Removing usernames altogether would require a complete redesign of how friends work on Revolt.
 
+Discriminators also help solve a couple of issues with regards to username abandonment, users may sign up and:
+
+1. Forget their account credentials or otherwise get locked out, and never recover their account.
+2. Forget that their account even exists.
+3. Decide they don't want to keep using their account but never delete it.
+
+Revolt does not currently automatically delete old accounts with no activity which is why this poses an issue.
+
 Given Revolt's current size, 4-digit numeric discriminators currently pose the least issues.
 
 | Solution       |      Example       | Description                                   | Usability | Quantity | Safe |
