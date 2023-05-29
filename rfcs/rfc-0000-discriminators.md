@@ -1,7 +1,7 @@
 - Feature Name: Discriminators
 - Start Date: 06/05/2023
-- RFC PR: https://github.com/revoltchat/rfcs/issues/0000
-- Tracking Issue: https://github.com/revoltchat/revolt/issues/0000
+- RFC PR: https://github.com/revoltchat/rfcs/pull/3
+- Tracking Issue: https://github.com/revoltchat/backend/issues/247
 - Status: draft
 
 # Summary
