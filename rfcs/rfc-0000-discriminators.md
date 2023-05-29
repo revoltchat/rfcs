@@ -77,15 +77,17 @@ making a significant UX hit towards the usability of the friend system.
 
 # Reference-level explanation
 
-WIP
+A new `discriminator` field shall be added to the User object, as such the
+`UNIQUE IGNORE-CASE USERNAME` index will be replaced with a
+`UNIQUE (IGNORE-CASE USERNAME + DISCRIMINATOR)` index.
 
-This is the technical section of the RFC, it should go over in detail:
+Existing clients may continue to display usernames but will no longer have the guarantee
+any one username is unique and must implement the discriminator field to distinguish them
+to end users.
 
-- Its interaction with other features
-- How this will be implemented
-- Corner or edge cases
-
-This section should reference the examples in the previous section and disect them in more detail.
+Discriminators shall be 4-digit identifiers (this may be expanded in the future if we reach
+a point at which they are no longer sustainable, or otherwise at least one username is becoming
+saturated).
 
 # Drawbacks
 
@@ -168,16 +170,7 @@ In regards to this table,
 - † Restricting existing usernames further would potentially require some users to change username.
 - ¶ Removing usernames altogether would require a complete redesign of how friends work on Revolt.
 
-# Prior art
-
-This has been implemented before on other platforms:
-
-- Discord's discriminator system
-- Blizzard's [BattleTag system](https://us.battle.net/support/en/article/75767)
-
-# Unresolved questions
-
-We haven't decided on how the discriminator will look yet, the main options include:
+Given Revolt's current size, 4-digit numeric discriminators currently pose the least issues.
 
 | Solution       |      Example       | Description                                   | Usability | Quantity | Safe |
 | -------------- | :----------------: | --------------------------------------------- | :-------: | :------: | :--: |
@@ -194,9 +187,22 @@ In regards to this table:
 - Safe is whether the solution is not susceptible to generating undesired combinations and phrases.
 - † Allowing any alphanumeric characters may cause confusion between similar charactres using certain fonts, e.g. `O` and `0`.
 
+# Prior art
+
+This has been implemented before on other platforms:
+
+- Discord's discriminator system
+- Blizzard's [BattleTag system](https://us.battle.net/support/en/article/75767)
+
+# Unresolved questions
+
+No currently unresolved questions.
+
 # Security concerns
 
 This should not impact security, since this is almost entirely a cosmetic change to usernames.
+
+This should not have any adverse effects for functionality such as blocking users as this is entirely handled using internal IDs.
 
 # Future ideas
 
