@@ -157,7 +157,7 @@ Discriminators appear to show the least disadvantages out of all of the solution
 | Unique usernames<br/>w/ restricted character set                        | Alphanumeric unique global usernames                                                                                  |             ❌              |           ❌            |   ❌    |    ✅     |  Medium †  |
 | Unique usernames<br/>w/ display names                                   | Either unique username solution but with added display names that show instead of the username                        |             ⚠️              |           ❌            |   ⚠️    |    ✅     |    Low     |
 | Remove usernames altogether<br/>(only display names)                    | Resort to using friend codes, invite links, and the like exclusively.                                                 |             ✅              |           ✅            |   ✅    |    ⚠️     |   High ¶   |
-| Unique cryptographic user identifiers with display names          | Resort to using friend codes, invite links, and the like exclusively.                                                 |              ⚠️              |           ✅            |    ⚠️    |    ⚠️     |   Medium   |
+| Unique cryptographic user identifiers with display names                | Resort to using friend codes, invite links, and the like exclusively.                                                 |             ⚠️              |           ✅            |   ⚠️    |    ⚠️     |   Medium   |
 
 In regards to this table,
 
@@ -207,3 +207,7 @@ As discussed previously, we may look into implementing:
 - Better friend flow UX
 
 We may also want to look into implementing additional privacy settings for adding users.
+
+As per [discussion comment](https://github.com/revoltchat/rfcs/pull/3#discussion_r1199818589), we may want to warn users that
+their username contains weird unicode or other characters that may look similar or weird, that may prevent them from adding
+other people on the platform.
