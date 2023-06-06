@@ -30,12 +30,13 @@ all classed under the "interactions" type.
 A defined command users can invoke to trigger actions from a bot, the parameters are known and
 is intergrated into the UI in a way that the user can understand what the command takes before
 they run it and while writing it. Invoking a slash commands requires typing "/" into the message
-box.
+box. Slash commands are never sent as a message and are instead directly sent as a seperate request,
+other people will not see the command being sent unless the response is a message.
 
 Slash commands are able to have parameters with a variety of types and subcommands to group commands
 together.
 
-text parameters are able to have autocomplete to allow entering certain types of infomation easier.
+parameters are able to have autocomplete to allow entering certain types of infomation easier.
 
 ## Context Menu Commands
 
@@ -44,6 +45,11 @@ Context menu commands are actions you can invoke on any message or user from the
 
 member context menu commands are not attached to any specific channel and are invoked at a server level,
 message context menu commands have the message's channel attached.
+
+## Ephermeral Messages
+
+Ephermeral messages are messages which only one user can see, they can be sent as response to interactions,
+they are not stored in the server and are only sent to the user.
 
 ## Message Components
 
@@ -85,6 +91,10 @@ The configuration can be customized using a variety of different input types, su
 
 This list could be expanded in the future to allow more types
 
+## Renders
+
+https://www.figma.com/file/cDSUvArKH2pG0zv35na9El/Interactions?type=design&node-id=0%3A1&t=8eDl3jrNkGiHez7L-1
+
 <!-- Explain the proposal as if its already in Revolt and you were teaching it to new users.
 - Introduce new concepts
 - Explain the feature with examples
@@ -94,6 +104,29 @@ This list could be expanded in the future to allow more types
 For internal oriented RFCs such as internal code changes, this should largely talk about how contributors should think about the change. and give examples on the impacts. -->
 
 # Reference-level explanation
+
+## Slash Commands
+
+### Parameter Types
+
+### Checks
+
+### Cooldowns
+
+## Components
+
+## Responding To Interactions
+
+## Config Panel
+
+## Receiving Interactions
+
+Bots can receive interactions either via their websocket connection or via the interactions URL, if the
+interactions URL is set then the interaction will not be sent via websockets.
+
+[graph here]
+
+## Routes
 
 - GET -  Get interactions
 - POST - Sync interaction
@@ -107,6 +140,8 @@ For internal oriented RFCs such as internal code changes, this should largely ta
 - DELETE - delete interaction response
 
 Webhook for sending followup messages, doesnt work with context menu commands.
+
+## API Reference
 
 <!-- This is the technical section of the RFC, it should go over in detail:
 - Its interaction with other features
@@ -127,9 +162,14 @@ This section should reference the examples in the previous section and disect th
 
 # Prior art
 
+- Discord
+- Slack
+
 <!-- This should include both good and bad outlooks on the the proposal, this could include how other platforms, software and hardware solve similar issues if relevent or how any existing proposals have tried to solve the same problem. -->
 
 # Unresolved questions
+
+- is this worse in any way to message commands
 
 <!-- - Are there any parts which are not yet designed or you believe need further discussion
 - Do you expect any part of this proposal to change and you wish to draw attention to
@@ -137,8 +177,12 @@ This section should reference the examples in the previous section and disect th
 
 # Security concerns
 
+- Sending requests to unsecure bot routes
+
 <!-- How does this RFC impact security, this section might not always be applicable and if you believe it is not please write in this section why you believe that. -->
 
 # Future ideas
+
+- more components and interaction types
 
 <!-- Are there any features or changes that this proposal could enable, or how this proposal impacts the future of Revolt. -->
