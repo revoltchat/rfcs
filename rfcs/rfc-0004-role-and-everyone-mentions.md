@@ -1,6 +1,6 @@
 - Feature Name: Role and Everyone mentions.
 - Start Date: 08/06/2023
-- RFC PR: https://github.com/revoltchat/rfcs/issues/0000
+- RFC PR: https://github.com/revoltchat/rfcs/pull/4
 - Tracking Issue: https://github.com/revoltchat/revolt/issues/0000
 - Status: draft
 
