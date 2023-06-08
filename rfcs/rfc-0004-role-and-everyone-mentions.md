@@ -51,8 +51,21 @@ As for Everyone Mentions they'd appear at the top of the autocomplete selection 
 
 Additionally when mentioning a large number of people (100+) it will show a confirmation dialogue that will ask for confirmation before the mention is sent. 
 
+## Bulk Mention Handling
+
+When a user mentions a selection of people the back-end should first determine what users are affected by the mention, in the case of an everyone mention this is the same as getting all the users in the server however for a role based selection this gets more complicated, 
+
+a good way to handle this would be to just query the database and ask it to only return users that match the role with potentially a limit to be able to use indexes to go through the users if the role mention is for a lot of people.
+
+Then to notify the users the back-end adds the notification per-user to a notification queue, and when the user connects that notification queue is queried and the notification is sent. 
+
+If the user is offline the notification is deferred until they connect once more.
+
+Once the user either dismisses or reads the associated message the notification is marked as resolved and deleted.
+
 ## Corner Cases
 - Users named either with a role name or everyone. This is not a problem due to the fact that we separate out role and everyone mentions with special syntax instead of the standard user mention syntax.
+- Users joining in the middle of a bulk mention. In this case the users do not get mentioned.
 # Drawbacks
 
 - annoying users with notifications they did not want to be apart of
