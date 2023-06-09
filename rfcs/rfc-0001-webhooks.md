@@ -49,6 +49,9 @@ struct Webhoook {
   // The ID of the channel which this webhook belongs to
   channel: String,
 
+  // The permissions of the webhook
+  permissions: u64,
+
   // The token of the webhook
   token: String
 }
@@ -56,14 +59,14 @@ struct Webhoook {
 
 Addition routes must be added to the API, this includes:
 
-### Channel Routes
+## Channel Routes
 
 ```http
 POST /channel/<target>/webhooks - Create webhook in the channel
 GET /channel/<target>/webhooks - Gets all webhooks in the channel
 ```
 
-### Webhook Routes
+## Webhook Routes
 
 ```http
 GET /webhooks/<target>/<token> - Gets the webhook with a token, does not require permissions
@@ -147,6 +150,20 @@ enum Events {
   ...
 }
 ```
+
+## Permissions
+
+Webhooks are affected by permissions, to for example stop them from uploading files,
+webhooks will store the full `u64` set of permissions to keep consistancy but only
+a few permissions will affect the webhook, because of this the client will only show
+a select few permissions, this includes:
+
+- Send Messages
+- Send Embeds
+- Masquerade
+- React - affects interaction reactions
+
+When the webhook is created it defaults to having all of these permissions enabled.
 
 # Prior art
 
