@@ -75,10 +75,6 @@ A panel inside server setting which bot devs can configure so servers can edit s
 config will act as a mini rest api where revolt will, post and get the config from the bot and to the bot
 editing what entries which exist will be done via the api and take a list of entry types and configs
 
-# Buttons
-
-7 x 5 grid of buttons, can have either an emoji, text or both.
-
 ## Spec
 
 ![[Interactions lifecycles.canvas]]
@@ -179,52 +175,63 @@ struct Interaction {
 ```
 
 
-## Configuration
+## Blocks
 
 ```rust
-
-struct RadioButton {
-    id: String,
-    name: String,
-    description: Option<String>,
-    enabled: bool,
-
-    #[serde(flatten)]
-    option: InnerConfigOption
-}
-
-struct ConfigOption {
-    id: String,
-    name: String,
-    description: Option<String>
-}
-
 #[serde(tag = "type")]
-enum InnerConfigOption {
+enum Block {
     Text {
+        value: String
+    },
+    Section {
+        // mutually exclusive
+        text: Option<String>,
+        fields: Vec<Block>,
+
+        accessory: Block
+    },
+    Button {
+        action_id: String,
+        text: String,
+        url: Option<String>,
+        style: ButtonStyle,
+    },
+    Checkbox {
+        action_id: String,
+        text: String,
+        description: Option<String>
+    },
+    TextInput {
+        action_id: String,
         default: Option<String>,
         value: Option<String>
     },
-    Integer {
-        default: Option<String>,
-        value: Option<String>
+    File {
+        action_id: String,
+        default: String
     }
-    Role {
+    Number {
+        action_id: String,
         default: Option<String>,
-        value: Option<String>
+        min: Option<String>,
+        max: Option<String>,
+        decimal: Option<bool>
     },
-    Channel {
-        default: Option<String>,
-        value: Option<String>
-        channel_types: Vec<ChannelType>
+    Select {
+        action_id: String,
+        values: Option<Vec<SelectValue>>,
+        placeholder: Option<String>,
+        default: Option<SelectValue> // Id
     },
-    Dropdown {
-        options: Vec<Option>,
-        value: Option<ConfigOption>,
-        default: ConfigOption
+    MultiSelect {
+        action_id: String,
+        values: Option<Vec<SelectValue>>,
+        placeholder: Option<String>,
+        default: Option<SelectValue>, // Id
+        min: Option<u32>,
+        max: Option<u32>
     },
     Switch {
-        value: bool,
         default: Option<bool>
     },
     RadioButtons {
@@ -233,26 +240,38 @@ enum InnerConfigOption {
     },
     ColourPicker {
         transparency: bool,
-        value: u32,
         default: u32
+    },
+    Overflow {
+        buttons: Vec<Block>
     }
 }
 
-struct Category {
+enum ButtonStyle {
+    Default,
+    Primary,
+    Danger
+}
+
+enum SelectValue {
+    String(String),
+    Number(String),
+    Member(String),
+    Channel(String),
+    Role(String)
+}
+
+struct RadioButton {
     id: String,
     name: String,
-    options: Vec<ConfigOption>
-}
-
-struct ConfigurationType {
-    Server,
-    Channel
-}
-
-struct Configuration {
     description: Option<String>,
-    r#type: ConfigurationType
-    categories: Vec<Category>,
-    footer: Option<String>
+    enabled: bool,
+    option: Block
 }
 ```
+
+Can shove this all either inside:
+ - message
+ - config panel
+ - display panel
+ - modal
