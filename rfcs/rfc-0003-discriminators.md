@@ -206,7 +206,7 @@ In regards to this table:
 - Safe is whether the solution is not susceptible to generating undesired combinations and phrases.
 - † Allowing any alphanumeric characters may cause confusion between similar charactres using certain fonts, e.g. `O` and `0`.
 
-We also choose to restrict usernames to any Unicode alphabet rather than the full range given this has the best compromise between :
+We also choose to restrict usernames to any Unicode alphabet rather than the full range given this has the best compromise between reasonable usernames, users affected, and localisation:
 
 | Permissible Format                                |                 Regex                 | Users affected by change | Supports regional dialects | Potential for abuse |
 | ------------------------------------------------- | :-----------------------------------: | :----------------------: | :------------------------: | ------------------- |
