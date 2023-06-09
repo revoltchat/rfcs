@@ -100,6 +100,15 @@ Discriminators shall be 4-digit identifiers (this may be expanded in the future 
 a point at which they are no longer sustainable, or otherwise at least one username is becoming
 saturated).
 
+The friend add route, `POST /users/friend` will be updated to support parsing a discriminator,
+this will provide backwards compatibility for older clients to some limited extent.
+
+```json
+{
+  "username": "abc#1234"
+}
+```
+
 # Drawbacks
 
 The main drawbacks are:
