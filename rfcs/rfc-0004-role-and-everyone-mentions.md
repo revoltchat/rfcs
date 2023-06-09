@@ -29,6 +29,9 @@ to disable role specific or everyone notifications simply either edit your notif
 
  Or on a per server basis simply right click on the server name or channel name and untick either "Role Mentions" or "Everyone Mentions". It's as easy as that!
 
+## Automatic Disable
+Once your server is large enough about 50 people or so everyone mentions will be automatically disabled for all roles and you're going to have to re-enable them if you want to continue using them.
+
 ## Permitting
 Of course you shouldn't just trust *anyone* with that power that's why you can enable or disable the ability for users to mention Roles or Everyone with the permissions "Can Mention Everyone" or "Can Mention Role".
 
@@ -50,6 +53,8 @@ of course in the frontend it'd have to be similar to the already existing mentio
 As for Everyone Mentions they'd appear at the top of the autocomplete selection to stop accidental everyone's. 
 
 Additionally when mentioning a large number of people (100+) it will show a confirmation dialogue that will ask for confirmation before the mention is sent. 
+## Automatic Disabling
+On join events the backend keeps track of how many users are in the server, when the amount of people in the server surpass 50 people it will go through all the roles in the server and disable everyone mentions, it will also toggle a flag in the database that it will check next time the server surpasses 50 people. (if for example a person leaves and joins right at the 50 people mark) If the flag is set it will not disable everyone for all roles again.
 
 ## Bulk Mention Handling
 
