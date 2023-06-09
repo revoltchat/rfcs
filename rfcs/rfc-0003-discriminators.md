@@ -31,11 +31,18 @@ it stands to solve multiple problems when implemented correctly:
 Revolt would be switching to a new username system made up of three parts:
 
 ```
-Hello, World!#123456
-^ your chosen name
-             ^ separator between chosen name and discriminator
-              ^ discriminator
+myusername#1234
+^ your chosen name (restricted character set)
+          ^ separator between chosen name and discriminator
+           ^ discriminator (4-digits in range 0001 to 9999)
 ```
+
+Users will also be able to set an optional display name which overrides their username
+in various parts of the user interface.
+
+Usernames use a restricted character set of any Unicode alphabet excluding some lookalike
+characters from the Cyrillic alphabet, if you username does not currently fit the specification,
+then it will be automatically santised upon upgrade and copied to your display name.
 
 Discriminators for new users are generated randomly on sign up while existing users will
 get a randomly generated discriminators upon the server software being upgraded.
@@ -81,9 +88,13 @@ A new `discriminator` string field shall be added to the User object, as such th
 `UNIQUE IGNORE-CASE USERNAME` index will be replaced with a
 `UNIQUE (IGNORE-CASE USERNAME + DISCRIMINATOR)` index.
 
+A new `display_name` string field shall be added to the User object, this will be subject
+to all existing username restrictions.
+
 Existing clients may continue to display usernames but will no longer have the guarantee
 any one username is unique and must implement the discriminator field to distinguish them
-to end users.
+to end users, and they must also show the display name instead of username in the chat
+interface and include it in profiles.
 
 Discriminators shall be 4-digit identifiers (this may be expanded in the future if we reach
 a point at which they are no longer sustainable, or otherwise at least one username is becoming
@@ -150,7 +161,7 @@ although for the sake of the following they are taken at face value:
 
 # Rationale and alternatives
 
-Discriminators appear to show the least disadvantages out of all of the solutions discussed so far.
+Discriminators (with display names and a restricted character set) appear to show the least disadvantages out of all of the solutions discussed so far.
 
 | Solution                                                                | Description                                                                                                           | Users have desired username | Selling disincentivized | Privacy | Usability | Difficulty |
 | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | :-------------------------: | :---------------------: | :-----: | :-------: | :--------: |
@@ -194,6 +205,19 @@ In regards to this table:
 - Quantity is how many possible discriminators may be housed under one username.
 - Safe is whether the solution is not susceptible to generating undesired combinations and phrases.
 - † Allowing any alphanumeric characters may cause confusion between similar charactres using certain fonts, e.g. `O` and `0`.
+
+We also choose to restrict usernames to any Unicode alphabet rather than the full range given this has the best compromise between :
+
+| Permissible Format                                |                 Regex                 | Users affected by change | Supports regional dialects | Potential for abuse |
+| ------------------------------------------------- | :-----------------------------------: | :----------------------: | :------------------------: | ------------------- |
+| Alphanumeric                                      |            `^[a-zA-Z\d]+$`            |           18%            |             ❌             | Low                 |
+| Any alphabet ¶ or digit                           |          `^(\p{L} \| \d)+$`           |           17%            |             ✅             | Medium ¶            |
+| Alphanumeric with special characters †            |         `^([a-zA-Z\d_.-])+$`          |           11%            |             ❌             | Low                 |
+| Any alphabet ¶ or digit with special characters † |        `^(\p{L} \| [\d_.-])+$`        |            9%            |             ✅             | Medium ¶            |
+| Current format                                    | `^[^\u200BА-Яа-яΑ-Ωα-ω@#:\n\r\[\]]+$` |            0%            |             ✅             | High                |
+
+- † Special characters include underscore, period and dash.
+- ¶ Certain lookalike characters will continue to be blocked, such as those from the cyrillic alphabet.
 
 # Prior art
 
