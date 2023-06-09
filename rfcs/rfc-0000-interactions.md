@@ -6,9 +6,9 @@
 
 # Summary
 
-Interactions are a way of interacting with bots in a more high level with better intergration
-with revolt and the UI. This will include, slash commands, buttons, selects, context menu commands and
-a customizable settings page for users to edit the bots config.
+Interactions are a way of interacting with bots in a higher level with better intergration
+with revolt and the UI. This will include, slash commands, message blocks, context menu commands,
+customizable config page and a dashboard.
 
 # Motivation
 
@@ -21,9 +21,6 @@ it as its all handled by the bot. In a similar case configuring the bot can be e
 commands or via a website which requires the user to leave revolt.
 
 # Guide-level explanation
-
-Multiple things are introduced in this RFC, slash commands, buttons and context menu commands are
-all classed under the "interactions" type.
 
 ## Slash command
 
@@ -51,45 +48,72 @@ message context menu commands have the message's channel attached.
 Ephermeral messages are messages which only one user can see, they can be sent as response to interactions,
 they are not stored in the server and are only sent to the user.
 
-## Message Components
+## Blocks
 
-Message components are interactions which are attached to messages, this currently includes buttons
-and selects.
+Blocks are a way of building messages to include different interactable elements, these blocks
+are the basis of interactions and are the entrypoint for the interaction flow, blocks are shown in a vertical
+column under the message.
 
-Message components are layed out in a grid on messages, currently the grid size is of 5 x 5 however
-this can be exapnded in the future. each component takes up a different size on the grid.
+Only bots are capable of sending blocks in a message.
 
-### Buttons
+Blocks can include both elements, regular text and sections to aid with layouts, they can be included in:
+ - Messages
+ - Modals
+ - Config Panel
+ - Dashboard
 
-Similar to reactions they are clickable actions on a message which can do different actions
-from a bot.
+### Sections
 
-buttons take up a 1x1 area.
+Sections are a way of showing blocks in a row, for example showing a button on the side of a paragraph, this helps
+make it easier to lay out better and more intuative messages. They can either have a text section and an element on
+the side or an array of blocks to be shown in a row.
 
-### Selects
+### Sub-Blocks
 
-Selects are dropdown menus which allow users to select a value from a preexisting list of values.
-They are able to select one or multiple values depending on the configuration on the select.
+Sub-blocks are used to group multiple elements together, for example a text field and a button, the text field wont
+trigger an interaction by itself and must rely on the button to trigger the interaction, you can use a sub-block to
+group both together and receive the values for all of the element in the sub-block.
 
-selects take up a 1x5 area, an entire row.
+# Message Elements
 
-## Bot Configuration
+Elements are the interactable parts of blocks, they all take an input in some form and are the entrypoint for the
+rest of the interactions flow.
+
+The different elements which this includes are:
+ - Buttons
+ - Checkboxes
+ - Text fields
+ - File inputs
+ - Number inputs
+ - Dropdown selects
+ - Multi-dropdown selects
+ - Toggable switches
+ - Radio buttons
+ - Colour pickers
+ - Overflow dropdown menus
+
+Not all of the elements trigger an interaction by themself alone due to them not have a definative value, only the
+following elements trigger an interaction:
+ - Buttons
+ - Checkboxes
+ - File inputs
+ - Dropdown selects
+ - Multi-dropdown selects
+ - Toggble switches
+ - Radio buttons
+ - Colour pickers
+ - Overflow dropdown menus
+
+Bots can use sub-blocks if they want to non-triggering elements.
+
+## Bot Config Panel
 
 Because most bots require a way to change the configuration for them, there will be a centralized
 system to be able to create, edit and view the configs for each server, this will include both a
 server wide config and per channel.
 
-The configuration can be customized using a variety of different input types, such as:
-- Text
-- Integer
-- Role
-- Channel
-- Dropdown
-- Switch
-- Radio Buttons
-- Colour Picker
-
-This list could be expanded in the future to allow more types
+The config panel uses the same blocks system to build the panel, and interactions to send the infomation
+to the bot.
 
 ## Renders
 
@@ -113,18 +137,20 @@ For internal oriented RFCs such as internal code changes, this should largely ta
 
 ### Cooldowns
 
-## Components
-
-## Responding To Interactions
-
-## Config Panel
-
 ## Receiving Interactions
 
 Bots can receive interactions either via their websocket connection or via the interactions URL, if the
 interactions URL is set then the interaction will not be sent via websockets.
 
-[graph here]
+## Blocks
+
+## Elements
+
+## Interaction Payload
+
+## Responding To Interactions
+
+## Config Panel
 
 ## Routes
 
@@ -138,10 +164,6 @@ interactions URL is set then the interaction will not be sent via websockets.
 - POST - interaction response
 - PATCH - edit interaction response
 - DELETE - delete interaction response
-
-Webhook for sending followup messages, doesnt work with context menu commands.
-
-## API Reference
 
 <!-- This is the technical section of the RFC, it should go over in detail:
 - Its interaction with other features

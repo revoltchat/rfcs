@@ -77,8 +77,6 @@ editing what entries which exist will be done via the api and take a list of ent
 
 ## Spec
 
-![[Interactions lifecycles.canvas]]
-
 ## Interactions
 
 ```rust
@@ -188,8 +186,12 @@ enum Block {
         text: Option<String>,
         fields: Vec<Block>,
 
-        accessory: Block
+        accessory: Option<Block>
     },
+    SubBlock {
+        action_id: String,
+        blocks: Vec<Block>
+    }
     Button {
         action_id: String,
         text: String,
@@ -267,6 +269,11 @@ struct RadioButton {
     description: Option<String>,
     enabled: bool,
     option: Block
+}
+
+// add this to existing message struct
+struct Message {
+    blocks: Vec<Block>
 }
 ```
 
