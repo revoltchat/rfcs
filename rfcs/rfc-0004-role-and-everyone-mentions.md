@@ -77,11 +77,14 @@ Once the user either dismisses or reads the associated message the notification 
 - being abused by power-moderators
 - would add parsing time as it'd require the back-end to parse it further and do a complex selection over the affected users.
 # Rationale and alternatives
+The solution proposed in this RFC is so far the option that is easiest to implement and doesn't require creation of a ton of new entities.
 
-- This solutions works the best as it's simple and we already have frontend components for mentions, and back-end infrastructure delivering notifications dynamically. It only requires additional parsing of content and easy to add permissions to happen. 
-- Adding multiple mentions by selecting affected roles or users using a table of some kind, this approach could work however there would need to be large changes done to the messaging API to facilitate such a solution.
-- A bot that sends a couple messages mentioning all of the affected usernames, I did not consider this to be a good solution as it practically DDoSes our servers and if used frequently could fill up chats with useless messages.
-- Ping groups, there was a suggestion to create 'ping groups' that users could be automatically or manually grouped into for pinging. This solution would be more expensive time wise to implement and would not re-use the existing roles data.
+
+| Solution                 | Description                                                                              | Usability | Difficulty |
+|--------------------------|------------------------------------------------------------------------------------------|-----------|------------|
+| Discord'alike mentions   | proposed in this RFC                                                                     | Medium    | Low        |
+| Bot managed mentions     | a bot that would make messages that mention the affected users                           | Low       | Low        |
+| Selective Table mentions | Adding multiple mentions by selecting affected roles or users using a table of some kind | Low       | Medium     |
 
 # Prior art
 
