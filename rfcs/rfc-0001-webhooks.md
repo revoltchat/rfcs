@@ -89,6 +89,10 @@ struct WebhookEditBody {
   // The new avatar for the webhook - Autumn ID
   avatar: Option<String>,
 
+  // The new permissions
+
+  permissions: Option<u64>,
+
   // The fields to remove
   remove: Option<Vec<RemoveFields>>
 }
