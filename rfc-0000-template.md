@@ -6,7 +6,7 @@
 
 # Summary
 
-One Paragraph overview of the feature
+One paragraph overview of the feature
 
 # Motivation
 
@@ -14,13 +14,13 @@ Why is this RFC being made, what does it achieve or solve, what is the expected 
 
 # Guide-level explanation
 
-Explain the proposal as if its already in Revolt and you were teaching it to new users.
+Explain the proposal as if it's already in Revolt and you were teaching it to new users.
 - Introduce new concepts
 - Explain the feature with examples
 - What this fixes or adds and what users should think of the feature
-- Discuss how this impacts using revolt, does it make it harder or easier to use.
+- Discuss how this impacts using Revolt, how it makes it harder or easier to use
 
-For internal oriented RFCs such as internal code changes, this should largely talk about how contributors should think about the change. and give examples on the impacts.
+For internal oriented RFCs such as internal code changes, this should largely talk about how contributors should think about the change and give examples on the impacts.
 
 # Reference-level explanation
 
@@ -43,18 +43,18 @@ Why should this not be added.
 
 # Prior art
 
-This should include both good and bad outlooks on the the proposal, this could include how other platforms, software and hardware solve similar issues if relevent or how any existing proposals have tried to solve the same problem.
+This should include both good and bad outlooks on the proposal. This could include how other platforms, software and hardware solve similar issues if relevent or how any existing proposals have tried to solve the same problem.
 
 # Unresolved questions
 
-- Are there any parts which are not yet designed or you believe need further discussion
-- Do you expect any part of this proposal to change and you wish to draw attention to
-- Are there any related issues which you belive are out of the scope of this RFC that could be addressed in a seperate RFC?
+- Are there any parts which are not yet designed or you believe need further discussion?
+- Do you expect any part of this proposal to change?
+- Are there any related issues which you believe are out of the scope of this RFC that could be addressed in a seperate RFC?
 
 # Security concerns
 
-How does this RFC impact security, this section might not always be applicable and if you believe it is not please write in this section why you believe that.
+How does this RFC impact security - This section might not always be applicable and if you believe it is not, please write your reasoning in this section.
 
 # Future ideas
 
-Are there any features or changes that this proposal could enable, or how this proposal impacts the future of Revolt.
+Are there any features or changes that this proposal could enable? How does this proposal impact the future of Revolt?
