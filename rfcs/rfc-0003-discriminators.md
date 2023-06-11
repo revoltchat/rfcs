@@ -2,7 +2,7 @@
 - Start Date: 06/05/2023
 - RFC PR: https://github.com/revoltchat/rfcs/pull/3
 - Tracking Issue: https://github.com/revoltchat/backend/issues/247
-- Status: draft
+- Status: accepted
 
 # Summary
 
