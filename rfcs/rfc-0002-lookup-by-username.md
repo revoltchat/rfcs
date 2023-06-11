@@ -1,6 +1,6 @@
 - Feature Name: (API route to look up user by username)
 - Start Date: (15/03/2023)
-- RFC PR: https://github.com/revoltchat/rfcs/issues/1
+- RFC PR: https://github.com/revoltchat/rfcs/pull/2
 - Tracking Issue: https://github.com/revoltchat/revolt/issues/0000
 - Status: draft
 
