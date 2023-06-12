@@ -1,0 +1,442 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>rfc-0003-discriminators</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="rfc-0001-webhooks.html"><strong aria-hidden="true">1.</strong> rfc-0001-webhooks</a></li><li class="chapter-item expanded "><a href="rfc-0003-discriminators.html" class="active"><strong aria-hidden="true">2.</strong> rfc-0003-discriminators</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <ul>
+<li>Feature Name: Discriminators</li>
+<li>Start Date: 06/05/2023</li>
+<li>RFC PR: https://github.com/revoltchat/rfcs/pull/3</li>
+<li>Tracking Issue: https://github.com/revoltchat/backend/issues/247</li>
+<li>Status: accepted</li>
+</ul>
+<h1 id="summary"><a class="header" href="#summary">Summary</a></h1>
+<p>Revolt should introduce discriminators which serve as part of a semi-hidden extension to
+usernames which allows multiple users to have the same username, the discriminator would
+not be visible in most circumstances except when viewing a person's profile and if you
+were to add said person by their username.</p>
+<h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
+<p>This RFC aims to move forwards <a href="https://github.com/orgs/revoltchat/discussions/61">prior discussion on the feature suggestions forum</a>,
+it stands to solve multiple problems when implemented correctly:</p>
+<ul>
+<li>
+<p>Users should in most, if not all, cases be able to pick their chosen username.</p>
+</li>
+<li>
+<p>This should curb any incentive to sell / steal accounts for &quot;rare usernames&quot;.</p>
+<p>Certain &quot;rare&quot; discriminators can also be prohibited.</p>
+</li>
+<li>
+<p>Allow users who do not want to be easily discoverable to stay hidden.</p>
+<p>Just a 4-digit discriminator provides 10,000 unique users.
+Expanding on this, we could for example, let users hide discriminators in servers and similar privacy features.</p>
+</li>
+</ul>
+<h1 id="guide-level-explanation"><a class="header" href="#guide-level-explanation">Guide-level explanation</a></h1>
+<p>Revolt would be switching to a new username system made up of three parts:</p>
+<pre><code>myusername#1234
+^ your chosen name (restricted character set)
+          ^ separator between chosen name and discriminator
+           ^ discriminator (4-digits in range 0001 to 9999)
+</code></pre>
+<p>Users will also be able to set an optional display name which overrides their username
+in various parts of the user interface.</p>
+<p>Usernames use a restricted character set of any Unicode alphabet excluding some lookalike
+characters from the Cyrillic alphabet, if you username does not currently fit the specification,
+then it will be automatically santised upon upgrade and copied to your display name.</p>
+<p>Discriminators for new users are generated randomly on sign up while existing users will
+get a randomly generated discriminators upon the server software being upgraded.</p>
+<blockquote>
+<p>Revolt treats usernames as case-insensitive so a full username such as &quot;Jason#1234&quot; is
+effectively the same as &quot;jasON#1234&quot; but only &quot;Jason#1234&quot; will display in the UI.</p>
+</blockquote>
+<p>Users may:</p>
+<ul>
+<li>
+<p>Change the case of their username at any moment, such as from &quot;Jason&quot; to &quot;jasON&quot;.</p>
+<p>This will never affect their discriminator.</p>
+</li>
+<li>
+<p>Change their username, but may have their discriminator regenerated if there is a conflict.</p>
+<p>Such as if you are changing from &quot;Jason#1234&quot; to &quot;Phil&quot;, but &quot;Phil#1234&quot; is taken.</p>
+</li>
+</ul>
+<h3 id="user-opinion"><a class="header" href="#user-opinion">User Opinion</a></h3>
+<p>Prior discussions on the forums primarily seem to lean in favour of discriminators being
+implemented into Revolt, the internal team has not raised any complaints against it, and
+the primary community on Revolt (&quot;Revolt Lounge&quot;) appears to be somewhat split on the
+issue.</p>
+<p>As a recent case study, Discord's change to unique usernames only has generated a lot of
+backlash and criticism from the community, it appears to be overwhemingly negative but
+these experiences are mostly coming from long-term users of Discord. The true opinion of
+the average user has not been gauged yet.</p>
+<h3 id="usability"><a class="header" href="#usability">Usability</a></h3>
+<p>This may make it more difficult to understand how to add users on Revolt, however this
+shouldn't be an issue as long as it's clearly communicated through the user interface.
+Revolt already allows a wide range of Unicode in usernames so we are definitely not
+making a significant UX hit towards the usability of the friend system.</p>
+<blockquote>
+<p>There are further considerations listed at the end of this document which must be
+addressed if this RFC were to be implemented.</p>
+</blockquote>
+<h1 id="reference-level-explanation"><a class="header" href="#reference-level-explanation">Reference-level explanation</a></h1>
+<p>A new <code>discriminator</code> string field shall be added to the User object, as such the
+<code>UNIQUE IGNORE-CASE USERNAME</code> index will be replaced with a
+<code>UNIQUE (IGNORE-CASE USERNAME + DISCRIMINATOR)</code> index.</p>
+<p>A new <code>display_name</code> string field shall be added to the User object, this will be subject
+to all existing username restrictions.</p>
+<p>Existing clients may continue to display usernames but will no longer have the guarantee
+any one username is unique and must implement the discriminator field to distinguish them
+to end users, and they must also show the display name instead of username in the chat
+interface and include it in profiles.</p>
+<p>Discriminators shall be 4-digit identifiers (this may be expanded in the future if we reach
+a point at which they are no longer sustainable, or otherwise at least one username is becoming
+saturated).</p>
+<p>The friend add route, <code>POST /users/friend</code> will be updated to support parsing a discriminator,
+this will provide backwards compatibility for older clients to some limited extent.</p>
+<pre><code class="language-json">{
+  &quot;username&quot;: &quot;abc#1234&quot;
+}
+</code></pre>
+<h1 id="drawbacks"><a class="header" href="#drawbacks">Drawbacks</a></h1>
+<p>The main drawbacks are:</p>
+<ul>
+<li>
+<p>Additional information to remember about your username</p>
+<p>Although this works both ways in the sense that, you can have a much simpler username.</p>
+</li>
+<li>
+<p>Users may no longer have a completely 'unique' username on the platform</p>
+<p>But we're approaching this from the standpoint that usernames on platforms such as these should not have to compete for 'uniqueness'.</p>
+</li>
+</ul>
+<p>I want to take this section to also discuss the case study of Discord's removal of the discriminator system and their <a href="https://discord.com/blog/usernames#heading-3">cited drawbacks</a>,
+it is worth noting however that Discord has not really specified how they've generated these statistics or this information,
+although for the sake of the following they are taken at face value:</p>
+<ul>
+<li>
+<blockquote>
+<p>More than 40% of you either don’t remember your discriminator or don’t even know what a discriminator is. That’s a big problem when discriminators are required to add a new friend.</p>
+</blockquote>
+<p>This RFC cannot address this issue however further work can be done to ease these interactions:</p>
+<ul>
+<li>
+<p>R&amp;D to determine how to build the UI to intuitively tell the user how to share their username with their discriminator</p>
+</li>
+<li>
+<p>Implementation of friend links / codes to ease connecting users to each other</p>
+<p>This is not something that Discord has solved and to this day there is no way to create a friend request link.</p>
+</li>
+<li>
+<p>Implementation of nearby find (prior art: Discord) / QR friend codes (prior art: Snapchat) / add by contact book (prior art: Signal, WhatsApp)</p>
+<p>These may help streamline IRL interactions by providing users with a simple flow to follow.</p>
+</li>
+<li>
+<p>Implementation of add by connections</p>
+<p>Allow adding other people by common social media connections.</p>
+</li>
+<li>
+<p>Global user search (prior art: Steam)</p>
+<p>Allow users to opt-in to a global username search / or otherwise also search through mutual members on servers, to avoid needing the discriminator altogether.</p>
+</li>
+</ul>
+</li>
+<li>
+<blockquote>
+<p>Across Discord, almost half of all friend requests fail to connect the user with the person they wanted to match with, mostly because users enter an incorrect or invalid username due to a combination of missing discriminator and incorrect casing.</p>
+</blockquote>
+<ul>
+<li>
+<p>Issues with ease of adding are addressed in the point above, however incorrect casing is irrelevant to Revolt as-is because Revolt's usernames are already case-insensitive and this will not change.</p>
+<p>If we look at the given example:</p>
+<blockquote>
+<p>You meet someone IRL that you want to talk to on Discord, and they say “I’m Phibi Eight Nine Three Six!” You go home and add “phibi#8936” only to find out you added the wrong “Phibi” because your new friend’s username is actually “PhIBI#8936”.</p>
+</blockquote>
+<p>Revolt does not permit a registration of both &quot;PhIBI&quot; and &quot;phibi&quot;.</p>
+</li>
+</ul>
+</li>
+<li>
+<blockquote>
+<p>You want to use a common name like “Mike” or “Jane” but there are already 9,999 Mikes or Janes so you’re blocked from that name altogether.</p>
+</blockquote>
+<p>We are not restricted to just 4-digit discriminators in our implementation.</p>
+</li>
+<li>
+<blockquote>
+<p>You like to change your username a lot and get rate limited.</p>
+</blockquote>
+<p>If we were also to add more stringent rate limits, this may be solved by also including display names.</p>
+</li>
+<li>
+<blockquote>
+<p>Your friend says they changed their name to “vernacular” but actually it’s “𝖛𝖊𝖗𝖓𝖆𝖈𝖚𝖑𝖆𝖗” and you have trouble finding them.</p>
+</blockquote>
+<p>While this is a valid concern, I would personally put this down as the user's own issue.</p>
+</li>
+</ul>
+<h1 id="rationale-and-alternatives"><a class="header" href="#rationale-and-alternatives">Rationale and alternatives</a></h1>
+<p>Discriminators (with display names and a restricted character set) appear to show the least disadvantages out of all of the solutions discussed so far.</p>
+<div class="table-wrapper"><table><thead><tr><th>Solution</th><th>Description</th><th style="text-align: center">Users have desired username</th><th style="text-align: center">Selling disincentivized</th><th style="text-align: center">Privacy</th><th style="text-align: center">Usability</th><th style="text-align: center">Difficulty</th></tr></thead><tbody>
+<tr><td><strong>Discriminators</strong></td><td>Proposed in this RFC</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">⚠️</td><td style="text-align: center">Low</td></tr>
+<tr><td><strong>Discriminators</strong><br/>w/ display names</td><td>Show display names with greater priority to username / discriminator combinations.<br/>* May be proposed in this RFC</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">⚠️</td><td style="text-align: center">Low</td></tr>
+<tr><td><strong>Discriminators</strong><br/>w/ display names<br/>w/ restricted character set</td><td>Also restrict the characters that you can use in the username itself.<br/>* May be proposed in this RFC</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">Medium †</td></tr>
+<tr><td>Unique usernames</td><td>Current system on Revolt<br/>(but any unicode username is allowed)</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">⚠️</td><td style="text-align: center">Low</td></tr>
+<tr><td>Unique usernames<br/>w/ restricted character set</td><td>Alphanumeric unique global usernames</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">❌</td><td style="text-align: center">✅</td><td style="text-align: center">Medium †</td></tr>
+<tr><td>Unique usernames<br/>w/ display names</td><td>Either unique username solution but with added display names that show instead of the username</td><td style="text-align: center">⚠️</td><td style="text-align: center">❌</td><td style="text-align: center">⚠️</td><td style="text-align: center">✅</td><td style="text-align: center">Low</td></tr>
+<tr><td>Remove usernames altogether<br/>(only display names)</td><td>Resort to using friend codes, invite links, and the like exclusively.</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">✅</td><td style="text-align: center">⚠️</td><td style="text-align: center">High ¶</td></tr>
+<tr><td>Unique cryptographic user identifiers with display names</td><td>Resort to using friend codes, invite links, and the like exclusively.</td><td style="text-align: center">⚠️</td><td style="text-align: center">✅</td><td style="text-align: center">⚠️</td><td style="text-align: center">⚠️</td><td style="text-align: center">Medium</td></tr>
+</tbody></table>
+</div>
+<p>In regards to this table,</p>
+<ul>
+<li>Privacy means whether users can avoid being discovered based on their common names.</li>
+<li>Usability is whether users can practically and quickly add each other.</li>
+<li>† Restricting existing usernames further would potentially require some users to change username.</li>
+<li>¶ Removing usernames altogether would require a complete redesign of how friends work on Revolt.</li>
+</ul>
+<p>Discriminators also help solve a couple of issues with regards to username abandonment, users may sign up and:</p>
+<ol>
+<li>Forget their account credentials or otherwise get locked out, and never recover their account.</li>
+<li>Forget that their account even exists.</li>
+<li>Decide they don't want to keep using their account but never delete it.</li>
+</ol>
+<p>Revolt does not currently automatically delete old accounts with no activity which is why this poses an issue.</p>
+<p>Given Revolt's current size, 4-digit numeric discriminators currently pose the least issues.</p>
+<div class="table-wrapper"><table><thead><tr><th>Solution</th><th style="text-align: center">Example</th><th>Description</th><th style="text-align: center">Usability</th><th style="text-align: center">Quantity</th><th style="text-align: center">Safe</th></tr></thead><tbody>
+<tr><td>4-digit</td><td style="text-align: center"><code>#1234</code></td><td>Any 4 digits</td><td style="text-align: center">✅</td><td style="text-align: center">Low</td><td style="text-align: center">✅</td></tr>
+<tr><td>N-digit</td><td style="text-align: center"><code>#123456</code></td><td>Any N digits</td><td style="text-align: center">⚠️</td><td style="text-align: center">Medium</td><td style="text-align: center">⚠️</td></tr>
+<tr><td>Variable Digit</td><td style="text-align: center"><code>#123</code> ... <code>#1234</code></td><td>Scale between n and N digits depending on use</td><td style="text-align: center">⚠️</td><td style="text-align: center">Infinite</td><td style="text-align: center">⚠️</td></tr>
+<tr><td>4-hex</td><td style="text-align: center"><code>#12AF</code></td><td>Any 4 hex characters</td><td style="text-align: center">✅</td><td style="text-align: center">Medium</td><td style="text-align: center">⚠️</td></tr>
+<tr><td>4-char</td><td style="text-align: center"><code>#1ABZ</code></td><td>Any 4 alphanumeric characters</td><td style="text-align: center">❌ †</td><td style="text-align: center">High</td><td style="text-align: center">❌</td></tr>
+</tbody></table>
+</div>
+<p>In regards to this table:</p>
+<ul>
+<li>Usability is whether the solution is practical, i.e. reasonably sized and simple.</li>
+<li>Quantity is how many possible discriminators may be housed under one username.</li>
+<li>Safe is whether the solution is not susceptible to generating undesired combinations and phrases.</li>
+<li>† Allowing any alphanumeric characters may cause confusion between similar charactres using certain fonts, e.g. <code>O</code> and <code>0</code>.</li>
+</ul>
+<p>We also choose to restrict usernames to any Unicode alphabet rather than the full range given this has the best compromise between reasonable usernames, users affected, and localisation:</p>
+<div class="table-wrapper"><table><thead><tr><th>Permissible Format</th><th style="text-align: center">Regex</th><th style="text-align: center">Users affected by change</th><th style="text-align: center">Supports regional dialects</th><th>Potential for abuse</th></tr></thead><tbody>
+<tr><td>Alphanumeric</td><td style="text-align: center"><code>^[a-zA-Z\d]+$</code></td><td style="text-align: center">18%</td><td style="text-align: center">❌</td><td>Low</td></tr>
+<tr><td>Any alphabet ¶ or digit</td><td style="text-align: center"><code>^(\p{L} \| \d)+$</code></td><td style="text-align: center">17%</td><td style="text-align: center">✅</td><td>Medium ¶</td></tr>
+<tr><td>Alphanumeric with special characters †</td><td style="text-align: center"><code>^([a-zA-Z\d_.-])+$</code></td><td style="text-align: center">11%</td><td style="text-align: center">❌</td><td>Low</td></tr>
+<tr><td>Any alphabet ¶ or digit with special characters †</td><td style="text-align: center"><code>^(\p{L} \| [\d_.-])+$</code></td><td style="text-align: center">9%</td><td style="text-align: center">✅</td><td>Medium ¶</td></tr>
+<tr><td>Current format</td><td style="text-align: center"><code>^[^\u200BА-Яа-яΑ-Ωα-ω@#:\n\r\[\]]+$</code></td><td style="text-align: center">0%</td><td style="text-align: center">✅</td><td>High</td></tr>
+</tbody></table>
+</div>
+<ul>
+<li>† Special characters include underscore, period and dash.</li>
+<li>¶ Certain lookalike characters will continue to be blocked, such as those from the cyrillic alphabet.</li>
+</ul>
+<h1 id="prior-art"><a class="header" href="#prior-art">Prior art</a></h1>
+<p>This has been implemented before on other platforms:</p>
+<ul>
+<li>Discord's discriminator system</li>
+<li>Blizzard's <a href="https://us.battle.net/support/en/article/75767">BattleTag system</a></li>
+</ul>
+<h1 id="unresolved-questions"><a class="header" href="#unresolved-questions">Unresolved questions</a></h1>
+<p>No currently unresolved questions.</p>
+<h1 id="security-concerns"><a class="header" href="#security-concerns">Security concerns</a></h1>
+<p>This should not impact security, since this is almost entirely a cosmetic change to usernames.</p>
+<p>This should not have any adverse effects for functionality such as blocking users as this is entirely handled using internal IDs.</p>
+<h1 id="future-ideas"><a class="header" href="#future-ideas">Future ideas</a></h1>
+<p>As discussed previously, we may look into implementing:</p>
+<ul>
+<li>Friend links / codes</li>
+<li>Nearby find / QR friend codes / add by contact book</li>
+<li>Add users by social connections</li>
+<li>Global user search</li>
+<li>Better friend flow UX</li>
+</ul>
+<p>We may also want to look into implementing additional privacy settings for adding users.</p>
+<p>As per <a href="https://github.com/revoltchat/rfcs/pull/3#discussion_r1199818589">discussion comment</a>, we may want to warn users that
+their username contains weird unicode or other characters that may look similar or weird, that may prevent them from adding
+other people on the platform.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="rfc-0001-webhooks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="rfc-0001-webhooks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

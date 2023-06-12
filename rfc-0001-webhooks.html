@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>rfc-0001-webhooks</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="rfc-0001-webhooks.html" class="active"><strong aria-hidden="true">1.</strong> rfc-0001-webhooks</a></li><li class="chapter-item expanded "><a href="rfc-0003-discriminators.html"><strong aria-hidden="true">2.</strong> rfc-0003-discriminators</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <ul>
+<li>Feature Name: Webhooks</li>
+<li>Start Date: 10/03/2023</li>
+<li>RFC PR: https://github.com/revoltchat/rfcs/issues/0001</li>
+<li>Tracking Issue: https://github.com/revoltchat/revolt/issues/0000</li>
+<li>Status: accepted</li>
+</ul>
+<h1 id="summary"><a class="header" href="#summary">Summary</a></h1>
+<p>This RFC adds the ability to be able to send messages from external applications and
+services through webhooks, this allows intergration with other services.</p>
+<h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
+<p>Webhooks make it easy to intergrate with other services, this allows other services
+to take advantage of Revolt's to send infomation through revolt. A common example is
+GitHub Webhooks which allow you to send messages when a repository changes.</p>
+<h1 id="guide-level-explanation"><a class="header" href="#guide-level-explanation">Guide-level explanation</a></h1>
+<p>This RFC adds the ability to create, edit, delete webhooks and send messages with the
+webhook, webhooks have a name, id, channel id, avatar and token. The token and id are
+used to send messages with the webhook.</p>
+<p>Fetching the webhook can be done with or without authorization, if you fetch with
+authorization the token will be returned, as the token is secret it should not be
+given to people without permissions.</p>
+<p>There will be a built-in way to use GitHub webhooks from revolt as this is a very
+commonly used type of webhook, no other types of webhooks have been considered yet.</p>
+<p>Creating a webhook will give it a default name of &quot;Webhook&quot; and default to the first
+channel in the channel list, users can then edit the name, channel and avatar.</p>
+<h1 id="reference-level-explanation"><a class="header" href="#reference-level-explanation">Reference-level explanation</a></h1>
+<p>The database will have an additional document to store the webhooks</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Webhoook {
+  // Unique Id
+  id: String,
+
+  // The name of the webhook - 1 to 32 chars
+  name: String,
+
+  // The avatar of the webhook, if it has one
+  avatar: Option&lt;File&gt;,
+
+  // The ID of the channel which this webhook belongs to
+  channel: String,
+
+  // The permissions of the webhook
+  permissions: u64,
+
+  // The token of the webhook
+  token: String
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Addition routes must be added to the API, this includes:</p>
+<h2 id="channel-routes"><a class="header" href="#channel-routes">Channel Routes</a></h2>
+<pre><code class="language-http">POST /channel/&lt;target&gt;/webhooks - Create webhook in the channel
+GET /channel/&lt;target&gt;/webhooks - Gets all webhooks in the channel
+</code></pre>
+<h2 id="webhook-routes"><a class="header" href="#webhook-routes">Webhook Routes</a></h2>
+<pre><code class="language-http">GET /webhooks/&lt;target&gt;/&lt;token&gt; - Gets the webhook with a token, does not require permissions
+GET /webhooks/&lt;target&gt; - Gets the wehook, requires permissions
+PATCH /webhooks/&lt;target&gt;/&lt;token&gt; - Edits the webhook with a token, does not require permissions
+PATCH /webhooks/&lt;target&gt; - Edits the webhooks, requires permissions
+DELETE /webhooks/&lt;target&gt;/&lt;token&gt; - Deletes the webhook with a token, does not require permissions
+DELETE /webhooks/&lt;target&gt; - Deletes the wehook, requires permissions
+POST /webhooks/&lt;target&gt;/&lt;token&gt; - Sends a message with the webhook
+POST /webhooks/&lt;target&gt;/&lt;token&gt;/github - GitHub compatible route for sending a message with the webhook
+</code></pre>
+<p>The PATCH routes take a json body with the data for editing the webhook:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct WebhookEditBody {
+  // The new name for the webhook
+  name: Option&lt;String&gt;,
+
+  // The new avatar for the webhook - Autumn ID
+  avatar: Option&lt;String&gt;,
+
+  // The new permissions
+
+  permissions: Option&lt;u64&gt;,
+
+  // The fields to remove
+  remove: Option&lt;Vec&lt;RemoveFields&gt;&gt;
+}
+
+pub enum RemoveFields {
+  Avatar
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The POST routes take the same json body as the message send route. The data the GitHub compatible
+route takes can be seen on the <a href="https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads">GitHub docs</a></p>
+<p>The message structure must be changed to accommodate these changes, this requires a breaking change
+of making <code>Message.author</code> either the user ID or the webhook ID, depending on what sent the message,
+when a webhook sends a message a <code>Message.webhook</code> field will contain the webhook's information.</p>
+<pre><code class="language-diff">- author: String  // User ID
++ author: String  // Either user ID or webhook ID
++ webhook: Option&lt;MessageWebhook&gt;
+</code></pre>
+<p>the webhook data inside a message will contain a stripped down version of the <code>Webhook</code> struct to avoid
+sending unessessary data:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct MessageWebhook {
+  // The name of the webhook - 1 to 32 chars
+  name: String,
+  // The id of the avatar of the webhook, if it has one
+  avatar: Option&lt;String&gt;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This will require an update to existing programs which use the API to ensure they do not break
+with this change.</p>
+<p>Information about the webhook which sent the message is included inside the message, you are also able to
+query <code>GET /webhooks/&lt;target&gt;</code> route which returns the same infomation.</p>
+<p>There will be three new events to go along side this, these events do not contain the token as these events are
+sent to all people who have access to the channel and not just people with permissions</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Events {
+  WebhookCreate(Webhook),  // Contains all the info about the webhook which was created
+
+  WebhookUpdate {
+    id: String,  // The ID of the updated webhook
+    data: PartialWebhook,  // Contains the data which was updated
+    remove: Vec&lt;RemoveFields&gt;  // A vec of the fields which where cleared
+  },
+
+  WebhookDelete {
+    id: String  // The ID of the webhook which was deleted
+  },
+
+  // existing events
+  ...
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="permissions"><a class="header" href="#permissions">Permissions</a></h2>
+<p>Webhooks are affected by permissions, to for example stop them from uploading files,
+webhooks will store the full <code>u64</code> set of permissions to keep consistancy but only
+a few permissions will affect the webhook, because of this the client will only show
+a select few permissions, this includes:</p>
+<ul>
+<li>Send Messages</li>
+<li>Send Embeds</li>
+<li>Masquerade</li>
+<li>React - affects interaction reactions</li>
+</ul>
+<p>When the webhook is created it defaults to having all of these permissions enabled.</p>
+<h1 id="prior-art"><a class="header" href="#prior-art">Prior art</a></h1>
+<p><a href="https://discord.com">Discord</a> and <a href="https://slack.com">Slack</a> both have webhooks as well both with
+similar implementation, both work well and have wide adoption</p>
+<h1 id="unresolved-questions"><a class="header" href="#unresolved-questions">Unresolved questions</a></h1>
+<p>Currently this RFC includes a breaking change, if possible this would like to be avoided however
+no solution has been found yet.</p>
+<h1 id="security-concerns"><a class="header" href="#security-concerns">Security concerns</a></h1>
+<p>No security concerns have been found yet, however this does allow third-parties to send messages to revolt,
+this could be used maliciously however the affected scope is small as it can only send messages.</p>
+<h1 id="future-ideas"><a class="header" href="#future-ideas">Future ideas</a></h1>
+<p>Currently there is only a Github compatible route for pre-existing formats, in the future this could be
+expanded to support more formats such as slack for example.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="rfc-0003-discriminators.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="rfc-0003-discriminators.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
