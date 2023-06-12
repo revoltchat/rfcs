@@ -115,6 +115,10 @@ server wide config and per channel.
 The config panel uses the same blocks system to build the panel, and interactions to send the infomation
 to the bot.
 
+## Bot Dashboard
+
+todo
+
 ## Renders
 
 https://www.figma.com/file/cDSUvArKH2pG0zv35na9El/Interactions?type=design&node-id=0%3A1&t=8eDl3jrNkGiHez7L-1
@@ -131,11 +135,19 @@ For internal oriented RFCs such as internal code changes, this should largely ta
 
 ## Slash Commands
 
+todo
+
 ### Parameter Types
+
+todo
 
 ### Checks
 
+todo
+
 ### Cooldowns
+
+todo
 
 ## Receiving Interactions
 
@@ -144,13 +156,31 @@ interactions URL is set then the interaction will not be sent via websockets.
 
 ## Blocks
 
+todo
+
+### Sub-blocks
+
+todo
+
 ## Elements
+
+todo
 
 ## Interaction Payload
 
+todo
+
 ## Responding To Interactions
 
+todo
+
 ## Config Panel
+
+todo
+
+## Dashboard
+
+todo
 
 ## Routes
 
@@ -174,9 +204,13 @@ This section should reference the examples in the previous section and disect th
 
 # Drawbacks
 
+todo
+
 <!-- Why should this not be added. -->
 
 # Rationale and alternatives
+
+todo
 
 <!-- - Why is this design the best
 - Are there alternative ways to solve this
@@ -184,8 +218,13 @@ This section should reference the examples in the previous section and disect th
 
 # Prior art
 
-- Discord
-- Slack
+## Discord
+
+todo
+
+## Slack
+
+todo
 
 <!-- This should include both good and bad outlooks on the the proposal, this could include how other platforms, software and hardware solve similar issues if relevent or how any existing proposals have tried to solve the same problem. -->
 
