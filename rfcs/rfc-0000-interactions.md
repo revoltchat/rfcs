@@ -57,10 +57,11 @@ column under the message.
 Only bots are capable of sending blocks in a message.
 
 Blocks can include both elements, regular text and sections to aid with layouts, they can be included in:
- - Messages
- - Modals
- - Config Panel
- - Dashboard
+
+- Messages
+- Modals
+- Config Panel
+- Dashboard
 
 ### Sections
 
@@ -80,35 +81,37 @@ Elements are the interactable parts of blocks, they all take an input in some fo
 rest of the interactions flow.
 
 The different elements which this includes are:
- - Buttons
- - Checkboxes
- - Text fields
- - File inputs
- - Number inputs
- - Dropdown selects
- - Multi-dropdown selects
- - Toggable switches
- - Radio buttons
- - Colour pickers
- - Overflow dropdown menus
+
+- Buttons
+- Checkboxes
+- Text fields
+- File inputs
+- Number inputs
+- Dropdown selects
+- Multi-dropdown selects
+- Toggable switches
+- Radio buttons
+- Colour pickers
+- Overflow dropdown menus
 
 Not all of the elements trigger an interaction by themself alone due to them not have a definative value, only the
 following elements trigger an interaction:
- - Buttons
- - Checkboxes
- - File inputs
- - Dropdown selects
- - Multi-dropdown selects
- - Toggble switches
- - Radio buttons
- - Colour pickers
- - Overflow dropdown menus
+
+- Buttons
+- Checkboxes
+- File inputs
+- Dropdown selects
+- Multi-dropdown selects
+- Toggble switches
+- Radio buttons
+- Colour pickers
+- Overflow dropdown menus
 
 Bots can use sub-blocks if they want to non-triggering elements.
 
 ## Bot Config Panel
 
-Because most bots require a way to change the configuration for them, there will be a centralized
+Because most bots require a way to change the configuration for them, there will be a centralised
 system to be able to create, edit and view the configs for each server, this will include both a
 server wide config and per channel.
 
@@ -117,37 +120,116 @@ to the bot.
 
 ## Bot Dashboard
 
-todo
+The dashboard is similar to the config panel which lets bots have a centralised place to display information,
+there will only be a server wide dashboard for bots and not a per channel one.
 
 ## Renders
 
 https://www.figma.com/file/cDSUvArKH2pG0zv35na9El/Interactions?type=design&node-id=0%3A1&t=8eDl3jrNkGiHez7L-1
 
-<!-- Explain the proposal as if its already in Revolt and you were teaching it to new users.
-- Introduce new concepts
-- Explain the feature with examples
-- What this fixes or adds and what users should think of the feature
-- Discuss how this impacts using revolt, does it make it harder or easier to use.
-
-For internal oriented RFCs such as internal code changes, this should largely talk about how contributors should think about the change. and give examples on the impacts. -->
-
 # Reference-level explanation
 
 ## Slash Commands
 
-todo
+This defines the structure of a slash command which is given to the API.
 
-### Parameter Types
+```rust
+struct SlashCommand {
+    name: String,
+    aliases: Option<Vec<String>>,
+    options: Vec<SlashCommandOption>,
+    checks: Option<Vec<SlashCommandCheck>>,
+    cooldown: Option<SlashCommandCooldown>,
+    nsfw: Option<bool>,
+    server_only: Option<bool>,
+    dm_only: Option<bool>,
+}
+```
 
-todo
+### Options
+
+```rust
+struct SlashCommandOption {
+    name: String,
+    required: Option<bool>,
+
+    #[serde(flatten)]
+    inner: InnerSlashCommandOption
+}
+
+enum InnerSlashCommandOption {
+    Text {
+        min_length: Option<u32>,
+        max_length: Option<u32>,
+        autocomplete: Option<bool>,
+        choices: Option<Vec<String>>,
+    },
+    Integer {
+        min: Option<u32>,
+        max: Option<u32>,
+        autocomplete: Option<bool>,
+        choices: Option<Vec<String>>,
+    },
+    Boolean {},
+    Member {
+        permissions: Option<PermissionsOverwrites>,
+        choices: Option<Vec<String>>,
+    },
+    Channel {
+        channel_types: Option<Vec<ChannelType>>,
+    },
+    Role {
+        permissions: Option<PermissionsOverwrites>,
+        choices: Option<Vec<String>>,
+    },
+    Date {
+        before: Option<String>,
+        after: Option<String>,
+        choices: Option<Vec<String>>,
+    },
+    Time {
+        before: Option<String>,
+        after: Option<String>,
+        choices: Option<Vec<String>>,
+    },
+    Datetime {
+        date: InnerSlashCommandOption,
+        time: InnerSlashCommandOption,
+    },
+    Attachment {
+        filter: Option<Vec<FileType>>,
+        min_size: Option<u64>,
+        max_size: Option<u64>,
+    },
+    VarArgs {
+        min: Option<u8>,
+        max: Option<u8>,
+        option: InnerSlashCommandOption,
+    },
+    Group(SlashCommand),
+}
+```
 
 ### Checks
 
-todo
+- permissions
 
 ### Cooldowns
 
-todo
+```rust
+struct SlashCommandCooldown {
+    limit: u32,
+    length: u32,
+    bucket: SlashCommandCooldownBucket,
+}
+
+enum SlashCommandCooldownBucket {
+    Server,
+    Channel,
+    Member,
+    User,
+}
+```
 
 ## Receiving Interactions
 
@@ -195,26 +277,13 @@ todo
 - PATCH - edit interaction response
 - DELETE - delete interaction response
 
-<!-- This is the technical section of the RFC, it should go over in detail:
-- Its interaction with other features
-- How this will be implemented
-- Corner or edge cases
-
-This section should reference the examples in the previous section and disect them in more detail. -->
-
 # Drawbacks
 
 todo
 
-<!-- Why should this not be added. -->
-
 # Rationale and alternatives
 
 todo
-
-<!-- - Why is this design the best
-- Are there alternative ways to solve this
-- Could this be done with existing features or existing solutions -->
 
 # Prior art
 
@@ -226,24 +295,45 @@ todo
 
 todo
 
-<!-- This should include both good and bad outlooks on the the proposal, this could include how other platforms, software and hardware solve similar issues if relevent or how any existing proposals have tried to solve the same problem. -->
-
 # Unresolved questions
 
 - is this worse in any way to message commands
-
-<!-- - Are there any parts which are not yet designed or you believe need further discussion
-- Do you expect any part of this proposal to change and you wish to draw attention to
-- Are there any related issues which you belive are out of the scope of this RFC that could be addressed in a seperate RFC? -->
+- timezones
 
 # Security concerns
 
 - Sending requests to unsecure bot routes
 
-<!-- How does this RFC impact security, this section might not always be applicable and if you believe it is not please write in this section why you believe that. -->
-
 # Future ideas
 
 - more components and interaction types
 
-<!-- Are there any features or changes that this proposal could enable, or how this proposal impacts the future of Revolt. -->
+```mermaid
+---
+title: Interactions
+---
+flowchart LR
+    client[Client]
+    api[API]
+    bot[Bot]
+
+    bot_gateway[Bot Gateway]
+    bot_interaction_url[Bot Interaction URL]
+
+    client--slash command-->api
+    client--modal response-->api
+    client--config panel response-->api
+    client--autocomplete request-->api
+
+    api--Failed validation-->client
+    api--Modal-->client
+    api--Message-->client
+
+    api--> bot_gateway & bot_interaction_url -->bot
+
+    bot--Sync slash commannds-->api
+    bot--Modal-->api
+    bot--Message-->api
+    bot--Failed validation-->api
+    bot--autocomplete-->api
+```
