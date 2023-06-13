@@ -164,11 +164,12 @@ enum InnerSlashCommandOption {
         autocomplete: Option<bool>,
         choices: Option<Vec<String>>,
     },
-    Integer {
-        min: Option<u32>,
-        max: Option<u32>,
+    Number {
+        min: Option<f32>,
+        max: Option<f32>,
         autocomplete: Option<bool>,
         choices: Option<Vec<String>>,
+        allow_floats: Option<bool>
     },
     Boolean {},
     Member {
@@ -238,23 +239,220 @@ interactions URL is set then the interaction will not be sent via websockets.
 
 ## Blocks
 
-todo
+```rust
+enum Block {
+    Text {
+        value: String,
+    },
+    Section {
+        // mutually exclusive
+        text: Option<String>,
+        fields: Vec<Block>,
 
-### Sub-blocks
+        accessory: Option<Block>,
+    },
+    SubBlock {
+        action_id: String,
+        blocks: Vec<Block>,
+    },
+    Element(Element),
+}
 
-todo
+enum Element {
+    Button {
+        action_id: String,
+        text: String,
+        url: Option<String>,
+        style: ButtonStyle,
+    },
+    Checkbox {
+        action_id: String,
+        text: String,
+        description: Option<String>,
+        default: Option<bool>,
+    },
+    TextInput {
+        action_id: String,
+        default: Option<String>,
+        value: String,
+    },
+    Attachment {
+        action_id: String,
+        default: String,
+    }
+    Number {
+        action_id: String,
+        default: Option<String>,
+        min: Option<String>,
+        max: Option<String>,
+        decimal: Option<bool>,
+    },
+    Select {
+        action_id: String,
+        values: Option<Vec<SelectValue>>,
+        placeholder: Option<String>,
+        default: Option<SelectValue>, // Id
+    },
+    MultiSelect {
+        action_id: String,
+        values: Option<Vec<SelectValue>>,
+        placeholder: Option<String>,
+        default: Option<SelectValue>, // Id
+        min: Option<u32>,
+        max: Option<u32>,
+    },
+    Switch {
+        default: Option<bool>,
+    },
+    RadioButtons {
+        options: Vec<RadioButton>,
+        default: String,
+    },
+    ColourPicker {
+        transparency: bool,
+        default: u32,
+    },
+    Overflow {
+        buttons: Vec<Block>,
+    },
+}
 
-## Elements
+struct RadioButton {
+    action_id: String,
+    name: String,
+    description: Option<String>,
+}
 
-todo
+enum SelectValue {
+    String(String),
+    Number(String),
+    Attachment(String),
+    Role(String),
+    Channel(String),
+    Member(String),
+}
+
+```
 
 ## Interaction Payload
 
-todo
+```rust
+struct Interaction {
+    id: String,
+
+    #[serde(flatten)]
+    inner: InteractionData,
+}
+
+
+enum InteractionData {
+    SlashCommand(InteractionDataSlashCommand),
+    Block(InteractionDataBlock),
+}
+
+struct InteractionDataBlock {
+    action_id: String,
+
+    #[serde(flatten)]
+    inner: InteractionDataBlockInner,
+}
+
+enum InteractionDataBlock {
+    SubBlock {
+        blocks: Vec<InteractionDataBlock>,
+    },
+    Button,
+    CheckBox {
+        value: bool,
+    },
+    TextInput {
+        value: String,
+    },
+    Attachment {
+        value: String,
+    },
+    Number {
+        value: String,
+    },
+    Select {
+        value: SelectValue,
+    },
+    RadioButtons {
+        value: String
+    },
+    ColourPicker {
+        value: u64
+    },
+}
+
+struct InteractionDataSlashCommand {
+    name: String,
+    id: String,
+    options: Vec<InteractionDataSlashCommandOption>,
+}
+
+struct InteractionDataSlashCommandOption {
+    name: String,
+
+    #[serde(flatten)]
+    inner: InteractionDataSlashCommandOptionInner,
+}
+
+enum InteractionDataSlashCommandOptionInner {
+    Text {
+        value: String,
+    },
+    Number {
+        value: String,
+    },
+    Boolean {
+        value: bool,
+    },
+    Member {
+        member: Member,
+        user: User,
+    },
+    Channel {
+        channel: Channel,
+    },
+    Role {
+        role: Role,
+    },
+    Date {
+        value: String,
+    },
+    Time {
+        value: u32,
+    },
+    Datetime {
+        date: String,
+        time: u32,
+    },
+    Attachment {
+        value: String,
+    },
+    VarArgs {
+        values: Vec<InteractionDataSlashCommandOptionInner>,
+    },
+    Group {
+        group: InteractionDataSlashCommandOption,
+    },
+}
+```
 
 ## Responding To Interactions
 
-todo
+After receiving an interaction the bot has 3 seconds to respond to the interaction with a reponse, this
+response can be either a message if the interaction is attached to a channel or a modal.
+
+As not all validation can happen client side and api side the response can be an error response to indicate
+something failed validation or some other error for the user, this can include a message to the user to
+indicate why it failed, it can also optionally reenter the data they entered to make it easier to change the
+data the user typed in and send correct data.
+
+If the interaction is attached to a channel the interaction will also include a webhook which can be used
+to send followup messages, this webhook will last for 15 minuites then expire.
+
 
 ## Config Panel
 
