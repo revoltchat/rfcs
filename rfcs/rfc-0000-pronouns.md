@@ -6,7 +6,7 @@
 
 # Summary
 
-This change has two parts, creating a pronoun system for core/db and related data structures and delta, and moving the DisplayName field into `UserProfile` (by request of TempTrash). 
+This change creates a pronoun field for revolt's backend.
 
 
 # Motivation
@@ -18,8 +18,6 @@ Pronouns have been requested by the community and are high up on the RFC list.
 Currently users display their pronouns in their Profile content (bio) but this provices a cleaner solution to the problem. The aim of this change is to ensure that pronouns for a user can be easily seen and clearly displayed seperately to a users bio.
 
 # Reference-level explanation
-
-
 
 This change will modify:
 - core/models/users
@@ -46,7 +44,6 @@ Having pronouns on Revolt will be optional and this data will be editable from t
 ```text
 She has no roles!
 ```
-
 
 # Drawbacks
 
