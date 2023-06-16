@@ -33,7 +33,7 @@ For the backend, pronoun data will be stored as such.
     // User's displayed pronouns
         #[cfg_attr(feature = "validator", validate(length(min = 1, max = 5)))]
         #[serde(skip_serializing_if = "Option::is_none")]
-        pub pronouns: Option<Vec<Pronoun>>,
+        pub pronouns: Option<Vec<String>>,
 ```
 
 Having pronouns on Revolt will be optional and this data will be editable from the Profile section of user settings on Revolt's main client. One of the major changes this could bring is pronoun specific language for bots interacting with users.
