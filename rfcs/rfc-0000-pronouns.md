@@ -15,7 +15,7 @@ Pronouns have been requested by the community and are high up on the RFC list.
 
 # Guide-level explanation
 
-Currently users display their pronouns in their Profile content (bio) but this provides a cleaner solution to the problem. The aim of this change is to ensure that pronouns for a user can be easily seen and clearly displayed separately to a users bio. Additionally this change will create local database localised pronoun validation.
+Currently users display their pronouns in their Profile content (bio) but this provides a cleaner solution to the problem. The aim of this change is to ensure that pronouns for a user can be easily seen and displayed inline with a users displayname / username.
 
 # Reference-level explanation
 
@@ -43,10 +43,10 @@ For no pronouns the object will not be serialised
 
 Additionally, there will be database changes for pronouns to be fully implemented. The `Collection` shall contain an entry of every supported language (represented by an abbreviation) with an array of every valid pronoun for the language. This collection must also be accessible as an API route.
 
-```json
+```bson
 {
-  "language": "ENG",
-  "pronouns": ["she", "her", ...]
+  "language": "<string>",
+  "pronouns": ["<string>", "<string>", ...]
 }
 ```
 
@@ -66,7 +66,10 @@ The former offers a more 'minimal' display for users messages while the latter i
 
 Pronoun systems have been created tested on many different platforms before Revolt.chat, here is a sample of those
 - Instagram
-	Instagram has a very high regarded pronoun system as it validates pronouns before applying them for a user. As
+	Instagram has a very high regarded pronoun system as it validates 		pronouns before applying them for a user. 
+- Facebook
+	Facebook's UI changes if a user adds pronouns to their profile, (changing from gender neutral to gender specific language), and this information is only made public if a user chooses for it to be so.
+	
 
 # Unresolved questions
 
