@@ -148,6 +148,11 @@ struct SlashCommand {
 
 ### Options
 
+Options are the parameters and sub-commands for slash commands, there can be up to 15 (TODO) options per slash command,
+sub-command options dont count towards this limit and instead have their own limit.
+
+Because this is a tree-like structure there is a depth limit of 5 (TODO).
+
 ```rust
 struct SlashCommandOption {
     name: String,
@@ -213,7 +218,11 @@ enum InnerSlashCommandOption {
 
 ### Checks
 
-- permissions
+```rust
+struct SlashCommandCheck {
+    Permissions(u64)
+}
+```
 
 ### Cooldowns
 
@@ -289,17 +298,17 @@ enum Element {
     },
     Select {
         action_id: String,
-        values: Option<Vec<SelectValue>>,
-        placeholder: Option<String>,
-        default: Option<SelectValue>, // Id
+        placeholder_text: Option<String>,
+        default: Option<SelectValue>,
+        select_type: SelectType,
     },
     MultiSelect {
         action_id: String,
-        values: Option<Vec<SelectValue>>,
-        placeholder: Option<String>,
-        default: Option<SelectValue>, // Id
+        placeholder_text: Option<String>,
+        defaults: Option<Vec<SelectValue>>,
         min: Option<u32>,
         max: Option<u32>,
+        select_type: SelectType,
     },
     Switch {
         default: Option<bool>,
@@ -314,6 +323,24 @@ enum Element {
     },
     Overflow {
         buttons: Vec<Block>,
+    },
+}
+
+enum SelectType {
+    Member {
+        permissions: Option<PermissionsOverwrites>,
+        choices: Option<Vec<String>>,
+    },
+    Channel {
+        channel_types: Option<Vec<ChannelType>>,
+        choices: Option<Vec<String>>,
+    },
+    Role {
+        permissions: Option<PermissionsOverwrites>,
+        choices: Option<Vec<String>>,
+    },
+    Text {
+        choices: Vec<String>,
     },
 }
 
@@ -453,10 +480,24 @@ data the user typed in and send correct data.
 If the interaction is attached to a channel the interaction will also include a webhook which can be used
 to send followup messages, this webhook will last for 15 minuites then expire.
 
-
 ## Config Panel
 
-todo
+The config panel structure is fetched everytime it is accessed, unlike slash commands where they must be synced,
+this is because it can include a lot of dynamic data like defaults - which should be the existing config values
+if any, select choices which use any members, roles, channels or similar from the context of where the panel is
+being used.
+
+There will be a single save button which initiats the interaction flow for the config panel, like other
+interaction types, this can lead into new interactions like modals, this can also respond with a failed validation
+response indicating that the values where wrong or some other error.
+
+There are two interaction flows present in config panels:
+
+- A user opens the panel, the API then must initiate a interaction flow to fetch the config panel, this is then
+displayed on the client to the user.
+
+- A user edits and saves the values in the config panel, this initiate a interaction flow to forward the config
+values to the bot to be saved.
 
 ## Dashboard
 
@@ -464,16 +505,35 @@ todo
 
 ## Routes
 
-- GET -  Get interactions
-- POST - Sync interaction
+## Slash Command Management
 
-- GET - Get server/channel config
-- PATCH - Update server/channel config
-- PATCH - Set server/channel config options
+These routes are for managing slash commands on the bot
 
-- POST - interaction response
-- PATCH - edit interaction response
-- DELETE - delete interaction response
+```http
+GET /interactions/slash_commands - Get interactions
+PUT - /interactions/slash_commands - Sync interaction
+```
+
+## Config Panel
+
+
+These routes are the server and channel bot config panels
+
+```http
+GET /interactions/config_panel - Get server/channel config - spawns interactions
+PATCH /interactions/config_panel - Update server/channel config
+PATCH /interactions/config_panel/invoke - Set server/channel config options - spawns interactions
+```
+
+## Responding To Interactions
+
+These routes are for responding to interactions, this does not include the webhook routes for followups as those
+are already defined.
+
+```http
+POST /interactions/response - interaction response
+PATCH /interactions/response - edit interaction response
+```
 
 # Drawbacks
 
@@ -501,6 +561,8 @@ todo
 # Security concerns
 
 - Sending requests to unsecure bot routes
+    - require https
+    - signature headers
 
 # Future ideas
 
