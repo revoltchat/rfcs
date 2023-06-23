@@ -6,7 +6,7 @@
 
 # Summary
 
-This change creates a pronoun field for revolt's backend.
+This change creates a pronoun field for Revolt.chat, this field will be attached to a users public profile information.
 
 
 # Motivation
@@ -15,51 +15,65 @@ Pronouns have been requested by the community and are high up on the RFC list.
 
 # Guide-level explanation
 
-Currently users display their pronouns in their Profile content (bio) but this provices a cleaner solution to the problem. The aim of this change is to ensure that pronouns for a user can be easily seen and clearly displayed seperately to a users bio.
+Currently users display their pronouns in their Profile content (bio) but this provides a cleaner solution to the problem. The aim of this change is to ensure that pronouns for a user can be easily seen and clearly displayed separately to a users bio. Additionally this change will create local database localised pronoun validation.
 
 # Reference-level explanation
 
-This change will modify:
-- core/models/users
-- core/db/util/bridge
-- quark/models/users
-- core/db/models/users/ops/mongo
-  And possibly more
+The field `pronouns` will be added to the main `User` object, as well as the `PartialUser` and `FieldsUser` objects. (In practise this means that the pronouns field will be fetched for the `fetch_user` API route, and pronouns can be edited or removed from the `edit_user` API route.
 
-For the backend, pronoun data will be stored as such.
+The pronoun field (on a `User` will be an optional array of strings. 
+
+### Data representation in Rustlang
 ```rust
-    // User's displayed pronouns
-        #[cfg_attr(feature = "validator", validate(length(min = 1, max = 5)))]
-        #[serde(skip_serializing_if = "Option::is_none")]
-        pub pronouns: Option<Vec<String>>,
+{
+pronouns: Option<Vec<String>>
+}
 ```
 
-Having pronouns on Revolt will be optional and this data will be editable from the Profile section of user settings on Revolt's main client. One of the major changes this could bring is pronoun specific language for bots interacting with users.
+### Pronouns stored in JSON
+```json
+{
+	"pronouns": ["she", "her"]
+}
+```
+For no pronouns the object will not be serialised 
+```json
 
-#### Input
-```text
-?/ whois info:roles @ToastXC
 ```
-#### Response
-```text
-She has no roles!
+
+Additionally, there will be database changes for pronouns to be fully implemented. The `Collection` shall contain an entry of every supported language (represented by an abbreviation) with an array of every valid pronoun for the language. This collection must also be accessible as an API route.
+
+```json
+{
+  "language": "ENG",
+  "pronouns": ["she", "her", ...]
+}
 ```
+
 
 # Drawbacks
 
-Mocking users for displaying pronouns on their profile and creating fake pronouns as a joke is very common and seen by some as hateful, There must be a system built into the pronoun system to avoid this. That would take some time and may not be worth the effort.
+As pointed out by users this system is prone to abuse, not only from users assigning themselves fake pronouns but for automated attacks. (e.g. bots scanning users accounts for neopronouns and harassing based on that data). And it has even been suggested that bots should not be allowed to access this data. However there is no clear answer on that yet.
 
 # Rationale and alternatives
 
-This feature is non essential, users can use their bio to display pronouns as well as their display name (as they have done in the past). The main alternative here is changing nothing
+For the new web clients pronouns could be displayed as a field of the their profile similar to the new display for badges on Revolt, another option is to show a users pronouns after their displayname/username. 
+
+The former offers a more 'minimal' display for users messages while the latter is more effective as a tool, for ensuring that a user's pronouns are easily visible and more importantly; used and respected.
+
 
 # Prior art
 
-In discussion Instagram is mentioned frequently for their implementation of a pronouns system.
+Pronoun systems have been created tested on many different platforms before Revolt.chat, here is a sample of those
+- Instagram
+	Instagram has a very high regarded pronoun system as it validates pronouns before applying them for a user. As
 
 # Unresolved questions
 
-There needs to be a proper system for validation of pronouns, perhaps a database for valid pronouns in each language or a blacklist, its unclear at this moment.
+The specifics for how to best represent and store data for pronouns in a way that is both simplistic and effective for MongoDB has not yet been confirmed.
+
+Should access to pronouns be restricted to non bot accounts?
+Should every user be able to see every other users pronouns or should this feature be restricted to those who are friended? 
 
 # Security concerns
 
@@ -67,4 +81,4 @@ N/A
 
 # Future ideas
 
-In future the Revolt frontend could refer to the user with their given pronouns (in a similar way to how facebook works).
+For Revolt clients in the future, there may be options for how pronouns are displayed on each user and perhaps multiple choices for a more customisable UI.
