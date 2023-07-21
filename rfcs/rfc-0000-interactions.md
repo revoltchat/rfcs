@@ -107,7 +107,7 @@ following elements trigger an interaction:
 - Colour pickers
 - Overflow dropdown menus
 
-Bots can use sub-blocks if they want to non-triggering elements.
+Bots can use sub-blocks if they want to trigger non-triggering elements.
 
 ## Bot Config Panel
 
