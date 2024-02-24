@@ -1,6 +1,6 @@
 - Feature Name: Alt Text for Images
 - Start Date: 23/02/2024
-- RFC PR: <https://github.com/revoltchat/rfcs/pull/9>
+- RFC PR: <https://github.com/revoltchat/rfcs/pull/10>
 - Tracking Issue: None
 - Status: draft
 
