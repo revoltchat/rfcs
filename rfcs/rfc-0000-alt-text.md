@@ -6,11 +6,11 @@
 
 # Summary
 
-Alt text on images is important for enhancing the accessibility and overall user experience with users that are blind or low-vision.
+Alt text on images is important for enhancing the accessibility on Revolt and overall user experience with users that are blind or low-vision.
 
 # Motivation
 
-Adding the ability to let users add alt text
+Adding the ability to let users add alt text to images will greatly improve user experience, mainly targeting users that are blind and low-vision. The default alt text on Revolt is the image's file name (e.g. `image.png`), which is problematic, because it doesn't describe the image properly, and is highly discouraged.
 
 # Guide-level explanation
 
