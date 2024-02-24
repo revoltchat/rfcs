@@ -6,7 +6,7 @@
 
 # Summary
 
-Alt text on images is important for enhancing the accessibility and overall user experience with users that are blind or low-vision .
+Alt text on images is important for enhancing the accessibility and overall user experience with users that are blind or low-vision.
 
 # Motivation
 
