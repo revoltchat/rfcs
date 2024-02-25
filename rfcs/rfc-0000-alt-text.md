@@ -1,4 +1,4 @@
-- Feature Name: Alt Text for Images
+- Feature Name: Alt Text for Media
 - Start Date: 23/02/2024
 - RFC PR: <https://github.com/revoltchat/rfcs/pull/10>
 - Tracking Issue: <https://github.com/orgs/revoltchat/discussions/664>
@@ -10,7 +10,7 @@ Alt text on images is important for enhancing the accessibility on Revolt and ov
 
 # Motivation
 
-Adding the ability to let users add alt text to images will greatly improve user experience, mainly targeting users that are blind and low-vision. The default alt text on Revolt is the image's file name (e.g. `image.png`), which is problematic, because it doesn't describe the image properly, and is highly discouraged.
+Adding the ability to let users add alt text to media will greatly improve user experience, mainly targeting users that are blind and low-vision. The default alt text on Revolt is the media's file name (e.g. `image.png`), which is problematic, because it doesn't describe the media properly, and is highly discouraged.
 
 # Guide-level explanation
 
@@ -24,6 +24,8 @@ Explain the proposal as if it's already in Revolt and you were teaching it to ne
 
 For internal oriented RFCs such as internal code changes, this should largely talk about how contributors should think about the change and give examples on the impacts.
 -->
+
+<!-- Alt texts are a way to make your media -->
 
 # Reference-level explanation
 
