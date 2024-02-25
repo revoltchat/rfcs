@@ -6,7 +6,7 @@
 
 # Summary
 
-Alt text on images is important for enhancing the accessibility on Revolt and overall user experience with users that are blind or low-vision.
+Alt text on media is important for enhancing the accessibility on Revolt and overall user experience with users that are blind or low-vision.
 
 # Motivation
 
