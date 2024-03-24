@@ -63,7 +63,7 @@ If you have not set an alt text on the image, Sharkey will display an confirmati
 
 When the image is expanded, the alt text will show below the image inside a small box.
 
-[insert image of sharkey image expansion]
+![Screenshot from 2024-03-24 11-43-38](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/0c8caba0-1260-499e-93ba-f97399033c10)
 
 # Unresolved questions
 <!--
