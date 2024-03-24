@@ -53,13 +53,17 @@ This should include both good and bad outlooks on the proposal. This could inclu
 A few alt text systems have been created on other websites before Revolt:
 
 ## Sharkey
-Sharkey has an alt text system as "captions." To access the captions modal, you would need to click on the image, then click on "Add caption." Doing this will display a modal with the image on top, then a text field for entering alt text.
+Sharkey has an alt text system labelled as "captions." To access the captions modal, you would need to click on the image, then click on "Add caption." Doing this will display a modal with the image on top, then a text field for entering alt text.
 
 ![Screenshot from 2024-03-24 11-28-09](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/3e2e0b72-e505-4f1a-90e4-a95039b51546)
 
 If you have not set an alt text on the image, Sharkey will display an confirmation modal, reminding you that you haven't set an alt text. This functionality can be enabled with the "Warn you when you forget to put alt text" setting.
 
 ![Screenshot from 2024-03-24 11-34-33](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/eca1f301-4e71-45d4-a91d-73f6835a18a4)
+
+When the image is expanded, the alt text will show below the image inside a small box.
+
+[insert image of sharkey image expansion]
 
 # Unresolved questions
 <!--
