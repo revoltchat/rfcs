@@ -57,13 +57,13 @@ Pixelfed has an alt text system when creating a new post. To access the alt text
 
 ![Screenshot from 2024-03-24 12-08-53](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/5db59906-7fc4-4492-9609-d1a4c5c052ae)
 
-If you do not have an alt text on the image, Pixelfed will display a confirmation modal, blocking you from posting the image entirely. This functionality can be enabled with the "Require Media Descriptions" setting. By default, it will post the image, despite not having alt text.
+If you do not have an alt text on the image, Pixelfed will display a modal, blocking you from posting the image entirely. This functionality can be enabled with the "Require Media Descriptions" setting. By default, it will post the image, despite not having alt text.
 
-[insert image of pixelfed posting blocked modal]
+![Screenshot from 2024-03-24 12-09-51](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/087b265b-9f00-4f44-8d5e-277b9154b603)
 
 When the image is hovered upon, the alt text will show in a tooltip.
 
-[insert image of pixelfed image tooltip]
+![Screenshot from 2024-03-24 12-16-27](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/97f4ad0e-f887-45cd-84c5-7d50c520febd)
 
 ## Sharkey
 Sharkey has an alt text system labelled as "captions." To access the captions modal, you would need to click on the image, then click on "Add caption." Doing this will display a modal with the image on top, then a text field for entering alt text.
