@@ -55,7 +55,7 @@ A few alt text systems have been created on other websites before Revolt:
 ## Pixelfed
 Pixelfed has an alt text system when creating a new post. To access the alt text entry, you would need to click on the "Alt Text" button. Doing this will display a page that will show a small thumbnail of the image on the left side, and a alt text entry on the right side.
 
-[insert image of pixelfed alt text workflow]
+![Screenshot from 2024-03-24 12-08-53](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/5db59906-7fc4-4492-9609-d1a4c5c052ae)
 
 ## Sharkey
 Sharkey has an alt text system labelled as "captions." To access the captions modal, you would need to click on the image, then click on "Add caption." Doing this will display a modal with the image on top, then a text field for entering alt text.
