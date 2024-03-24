@@ -5,15 +5,12 @@
 - Status: draft
 
 # Summary
-
 Alt text on media is important for enhancing the accessibility on Revolt and overall user experience with users that are blind or low-vision.
 
 # Motivation
-
 Adding the ability to let users add alt text to media will greatly improve user experience, mainly targeting users that are blind and low-vision. The default alt text on Revolt is the media's file name (e.g. `image.png`), which is problematic, because it doesn't describe the media properly, and is highly discouraged.
 
 # Guide-level explanation
-
 <!--
 Explain the proposal as if it's already in Revolt and you were teaching it to new users.
 
@@ -25,10 +22,9 @@ Explain the proposal as if it's already in Revolt and you were teaching it to ne
 For internal oriented RFCs such as internal code changes, this should largely talk about how contributors should think about the change and give examples on the impacts.
 -->
 
-<!-- Alt texts are a way to make your media -->
+Alt texts are a way to make your media accessible to more users on Revolt.
 
 # Reference-level explanation
-
 <!--
 This is the technical section of the RFC, it should go over in detail:
 
@@ -40,11 +36,9 @@ This section should reference the examples in the previous section and disect th
 -->
 
 # Drawbacks
-
 <!-- Why should this not be added. -->
 
 # Rationale and alternatives
-
 <!--
 - Why is this design the best
 - Are there alternative ways to solve this
@@ -52,13 +46,22 @@ This section should reference the examples in the previous section and disect th
 -->
 
 # Prior art
-
 <!--
 This should include both good and bad outlooks on the proposal. This could include how other platforms, software and hardware solve similar issues if relevent or how any existing proposals have tried to solve the same problem.
 -->
 
-# Unresolved questions
+A few alt text systems have been created on other websites before Revolt:
 
+## Sharkey
+Sharkey has an alt text system as "captions." To access the captions modal, you would need to click on the image, then click on "Add caption." Doing this will display a modal with the image on top, then a text field for entering alt text.
+
+[insert image of sharkey captioning workflow here]
+
+If you have not set an alt text on the image, Sharkey will display an confirmation modal, reminding you that you haven't set an alt text. This functionality can be enabled with the "Warn you when you forget to put alt text" setting.
+
+[insert image of sharkey no alt text confirmation modal]
+
+# Unresolved questions
 <!--
 - Are there any parts which are not yet designed or you believe need further discussion?
 - Do you expect any part of this proposal to change?
@@ -66,13 +69,11 @@ This should include both good and bad outlooks on the proposal. This could inclu
 -->
 
 # Security concerns
-
 <!--
 How does this RFC impact security - This section might not always be applicable and if you believe it is not, please write your reasoning in this section.
 -->
 
 # Future ideas
-
 <!--
 Are there any features or changes that this proposal could enable? How does this proposal impact the future of Revolt?
 -->
