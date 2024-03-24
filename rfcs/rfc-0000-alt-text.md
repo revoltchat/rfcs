@@ -57,7 +57,7 @@ Sharkey has an alt text system labelled as "captions." To access the captions mo
 
 ![Screenshot from 2024-03-24 11-28-09](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/3e2e0b72-e505-4f1a-90e4-a95039b51546)
 
-If you have not set an alt text on the image, Sharkey will display an confirmation modal, reminding you that you haven't set an alt text. This functionality can be enabled with the "Warn you when you forget to put alt text" setting. By default, 
+If you have not set an alt text on the image, Sharkey will display an confirmation modal, reminding you that you haven't set an alt text. This functionality can be enabled with the "Warn you when you forget to put alt text" setting. By default, it will just simply post the image, despite not having any alt text.
 
 ![Screenshot from 2024-03-24 11-34-33](https://github.com/theycallhermax/revolt-rfcs/assets/67456566/eca1f301-4e71-45d4-a91d-73f6835a18a4)
 
